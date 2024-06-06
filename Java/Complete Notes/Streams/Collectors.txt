@@ -1,0 +1,749 @@
+Link- https://www.javabrahman.com/java-8/java-8-java-util-stream-collector-basics-tutorial-with-examples/
+
+Collectors ‘collect’ the processed elements of the stream into a final representation. 
+Invoking the collect() method on a Stream, with a Collector instance passed as a parameter ends that Stream’s processing 
+and returns back the final result. 
+Stream.collect() is thus a terminal operation.
+
+Class Collectors
+	java.lang.Object
+		java.util.stream.Collectors
+
+public final class Collectors
+extends Object
+
+Accumulating or copying the data from stream object to collection object
+Summarizing or performing some special operation based on some criteria
+
+
+The term downstream in the documentation refers to one Collector accepting a second Collector as an argument. 
+The argument is applied downstream (after) the Collector that accepts it. 
+In other words, the downstream Collector is applied to the result of the upstream Collector.
+
+
+static <T> Collector<T,?,Double>	averagingDouble(ToDoubleFunction<? super T> mapper)
+					Returns a Collector that produces the arithmetic mean of a double-valued 
+					function applied to the input elements.
+
+static <T> Collector<T,?,Double>	averagingInt(ToIntFunction<? super T> mapper)
+					Returns a Collector that produces the arithmetic mean of an integer-valued 
+					function applied to the input elements.
+
+static <T> Collector<T,?,Double>	averagingLong(ToLongFunction<? super T> mapper)
+					Returns a Collector that produces the arithmetic mean of a long-valued 
+					function applied to the input elements.
+
+
+static <T,A,R,RR> Collector<T,A,RR>	collectingAndThen(Collector<T,A,R> downstream, Function<R,RR> finisher)
+
+static <T> Collector<T,?,Long>		counting()
+
+static <T,K> Collector<T,?,Map<K,List<T>>>	groupingBy(Function<? super T,? extends K> classifier)
+static <T,K,A,D> Collector<T,?,Map<K,D>>	groupingBy(Function<? super T,? extends K> classifier, Collector<? super T,A,D> downstream)
+static <T,K,D,A,M extends Map<K,D>>
+Collector<T,?,M>				groupingBy(Function<? super T,? extends K> classifier, Supplier<M> mapFactory, Collector<? super T,A,D> downstream)
+
+
+static <T,K> Collector<T,?,ConcurrentMap<K,List<T>>>	groupingByConcurrent(Function<? super T,? extends K> classifier)
+static <T,K,A,D> Collector<T,?,ConcurrentMap<K,D>>	groupingByConcurrent(Function<? super T,? extends K> classifier, Collector<? super T,A,D> downstream)
+static <T,K,A,D,M extends ConcurrentMap<K,D>>
+Collector<T,?,M>				groupingByConcurrent(Function<? super T,? extends K> classifier, Supplier<M> mapFactory, Collector<? super T,A,D> downstream)
+static Collector<CharSequence,?,String>		joining()
+static Collector<CharSequence,?,String>		joining(CharSequence delimiter)
+static Collector<CharSequence,?,String>		joining(CharSequence delimiter, CharSequence prefix, CharSequence suffix)
+static <T,U,A,R> Collector<T,?,R>		mapping(Function<? super T,? extends U> mapper, Collector<? super U,A,R> downstream)
+static <T> Collector<T,?,Optional<T>>		maxBy(Comparator<? super T> comparator)
+static <T> Collector<T,?,Optional<T>>		minBy(Comparator<? super T> comparator)
+static <T> Collector<T,?,Map<Boolean,List<T>>>	partitioningBy(Predicate<? super T> predicate)
+static <T,D,A> Collector<T,?,Map<Boolean,D>>	partitioningBy(Predicate<? super T> predicate, Collector<? super T,A,D> downstream)
+static <T> Collector<T,?,Optional<T>>		reducing(BinaryOperator<T> op)
+static <T> Collector<T,?,T>			reducing(T identity, BinaryOperator<T> op)
+static <T,U> Collector<T,?,U>			reducing(U identity, Function<? super T,? extends U> mapper, BinaryOperator<U> op)
+static <T> Collector<T,?,DoubleSummaryStatistics>	summarizingDouble(ToDoubleFunction<? super T> mapper)
+static <T> Collector<T,?,IntSummaryStatistics>	summarizingInt(ToIntFunction<? super T> mapper)
+static <T> Collector<T,?,LongSummaryStatistics>	summarizingLong(ToLongFunction<? super T> mapper)
+
+static <T> Collector<T,?,Double>		summingDouble(ToDoubleFunction<? super T> mapper)
+static <T> Collector<T,?,Integer>		summingInt(ToIntFunction<? super T> mapper)
+static <T> Collector<T,?,Long>			summingLong(ToLongFunction<? super T> mapper)
+
+static <T,C extends Collection<T>>
+Collector<T,?,C>				toCollection(Supplier<C> collectionFactory)
+static <T,K,U> Collector<T,?,ConcurrentMap<K,U>>	toConcurrentMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper)
+static <T,K,U> Collector<T,?,ConcurrentMap<K,U>>	toConcurrentMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper, BinaryOperator<U> mergeFunction)
+static <T,K,U,M extends ConcurrentMap<K,U>>
+Collector<T,?,M>				toConcurrentMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper, BinaryOperator<U> mergeFunction, Supplier<M> mapSupplier)
+static <T> Collector<T,?,List<T>>		toList()
+static <T,K,U> Collector<T,?,Map<K,U>>		toMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper)
+static <T,K,U> Collector<T,?,Map<K,U>>		toMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper, BinaryOperator<U> mergeFunction)
+static <T,K,U,M extends Map<K,U>>
+Collector<T,?,M>				toMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper, BinaryOperator<U> mergeFunction, Supplier<M> mapSupplier)
+static <T> Collector<T,?,Set<T>>		toSet()
+
+
+// Accumulate names into a List
+     List<String> list = people.stream().map(Person::getName).collect(Collectors.toList());
+
+     // Accumulate names into a TreeSet
+     Set<String> set = people.stream().map(Person::getName).collect(Collectors.toCollection(TreeSet::new));
+
+     // Convert elements to strings and concatenate them, separated by commas
+     String joined = things.stream()
+                           .map(Object::toString)
+                           .collect(Collectors.joining(", "));
+
+     // Compute sum of salaries of employee
+     int total = employees.stream()
+                          .collect(Collectors.summingInt(Employee::getSalary)));
+
+     // Group employees by department
+     Map<Department, List<Employee>> byDept
+         = employees.stream()
+                    .collect(Collectors.groupingBy(Employee::getDepartment));
+
+     // Compute sum of salaries by department
+     Map<Department, Integer> totalByDept
+         = employees.stream()
+                    .collect(Collectors.groupingBy(Employee::getDepartment,
+                                                   Collectors.summingInt(Employee::getSalary)));
+
+     // Partition students into passing and failing
+     Map<Boolean, List<Student>> passingFailing =
+         students.stream()
+                 .collect(Collectors.partitioningBy(s -> s.getGrade() >= PASS_THRESHOLD));
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Stream.collect() method
+
+Link - https://www.logicbig.com/how-to/code-snippets/jcode-java-8-streams-stream-collect.html
+
+The collect() method of Stream class can be used to accumulate elements of any Stream into a Collection.
+It allows you to accumulate the result into a choice for containers you want like a list, set, or map.
+
+Programmers often confuse that the collect() method belongs to the Collector class but that's not true. 
+It is defined in Stream class and that's why you can call it on Stream after doing any filtering or mapping.
+
+The Collector class provides different methods like toList(), toSet(), toMap(), and toConcurrentMap() to 
+collect the result of Stream into List, Set, Map, and ConcurrentMap in Java.
+
+It also provides a special toCollection() method which can be used to collect Stream elements into a specified Collection 
+like ArrayList, Vector, LinkedList, or HashSet.
+
+-	.collect(Collectors.toSet())
+-	.collect(Collectors.toList())
+-	.collect(Collectors.toMap(Function.identity(), String::length));
+-		-.collect(Collectors.toMap(Function.identity(), Function.identity())); => toMap(k->k, v->v)
+-		-.collect(Collectors.toMap(Employee::getId,  Employee::getName));
+-		-.collect(Collectors.toMap(Employee::getGender,	Employee::getName, (oldValue, newValue)  ->  String.join(", ", oldValue,  newValue))); 
+-		-.collect(Collectors.toMap(Employee::getGender, p  ->  1L, (oldCount, newCount)  ->  newCount+oldCount));
+-		-.collect(Collectors.toMap(Employee::getGender, Function.identity(), 
+                                  (oldPerson, newPerson)  -> newPerson.getIncome() > oldPerson.getIncome() ? newPerson : oldPerson));
+
+-	.collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+
+toMap and Function.identity()
+
+Function is an interface | identity is its method | identity is  a static method
+hence, Function.identity()
+Function is a functional interface 
+whose identity method returns a Function that always returns its input arguments.
+identity function always returns its input arguments.
+
+Link-  http://www.java2s.com/Tutorials/Java/Java_Stream/0290__Java_Stream_Collect_to_Map.htm
+
+Since a Map like HashMap stores two objects i.e. key and value and Stream contains just one element, 
+you need to provide the logic to extract the key and value objects from the Stream element.
+
+The Function.identity() used here denotes that the same object is used as a key.
+
+Collectors.toCollection() Example
+You can use this method to convert a Stream into any Collection class, 
+e.g. ArrayList, HashSet, TreeSet, LinkedHashSet, Vector, PriorityQueue, etc.
+
+-		- .collect(Collectors.toCollection(ArrayList::new))
+-		- .collect(Collectors.toCollection(HashSet::new));
+-		- .collect(Collectors.toCollection(LinkedHashSet::new));
+-		- .collect(Collectors.toCollection(TreeSet::new));
+-		- .collect(Collectors.toCollection(PriorityQueue::new));
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+*****************         summingDouble(), summingLong() and summingInt()   *********************************
+
+Ex.
+
+Double sumPrices= Product.productList().stream().collect(Collectors.summingDouble(x->x.price));  --->To sum the prices of all products
+
+List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
+Integer sum = numbers.stream().collect(Collectors.summingInt(Integer::intValue));
+				OR
+Integer sum = numbers.stream().collect(Collectors.summingInt(e->e));
+
+
+Integer sumOfQuantities = products.stream().collect(Collectors.summingInt(Product::getQuantity));
+System.out.println("Total number of products: " + sumOfQuantities);
+
+List<Long> numbers = Arrays.asList(23L, 11L, 13L, 49L, 7L);
+Long sum = numbers.stream().collect(Collectors.summingLong(Long::longValue));
+
+
+
+
+1) The predefined ToIntFunction, ToDoubleFunction and ToLongFunction from java.util.function enable us to do exactly such conversions - 
+	from object types to their primitive int, double, long types.
+
+2) .collect(Collectors.summingDouble(x->x.price)); ==  .collect(Collectors.summingDouble(Product::getPrice));
+
+Product.productList().stream().collect(Collectors.summingDouble(x->x.price)); ==Product.productList().stream().collect(Collectors.summingDouble(Product::getPrice));
+
+3)	.summingDouble(x->x.price)			|	.summingInt(x->x.price)
+	.summingDouble(Product::getPrice)		|	.summingInt(Product::getPrice)
+	.summingDouble(Double::doubleValue));		|	.summingInt(Double::doubleValue));	
+
+	.averagingDouble(x->x.price)
+	.averagingDouble(Product::getPrice)
+	.averagingDouble(Double::doubleValue)
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+*********************   counting()    **************************
+
+Parameters: This method does not take any parameter.
+
+Return Value: A Collector that counts the input elements. The count is returned as Long object.
+
+Ex.
+
+Map<String, Long> priceGreaterThan50 = Product.productList().stream().filter(e -> e.getPrice() > 50)
+			    .collect(Collectors.groupingBy(Product::getName, Collectors.counting()));
+
+
+Stream<String> s = Stream.of("1", "2", "3", "4");
+long ans = s.collect(Collectors.counting());
+  
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+************************   groupingBy     *********************************
+
+Link - https://stackabuse.com/guide-to-java-8-collectors-groupingby/
+	https://nickolasfisher.com/blog/The-Java-Stream-API-Collecting-Downstream-Elements
+
+We use them for grouping objects by some property and storing results in a Map instance.
+
+One interesting feature of collecting streams using the Collectors.groupingBy(..) method is the ability to manipulate downstream elements. 
+Basically, this means that, after you group the keys of the map, you can further make changes to the collection that the map is pointing to. 
+By default, it collects to a list.
+
+Map<String, List<String>> titleAndAuthor2 = blogPostDetails.stream()
+				  .collect(Collectors.groupingBy(BlogPost::getTitle,
+						  Collectors.mapping(BlogPost::getAuthor, Collectors.toList())));
+
+
+Map<String, List<String>> studentsByCity = students.stream()
+              .collect(Collectors.groupingBy(
+                  Student::getCity, 
+                  Collectors.mapping(Student::getName, Collectors.toList())));
+
+==> {New York=[Mike, Michael], Miami=[John, James, Kyle]}
+
+
+Map<Integer, Long> countByAge = students.stream()
+                .collect(Collectors.groupingBy(
+                    Student::getAge, 
+                    Collectors.counting()))
+
+==> {19=1, 20=3, 21=1}
+
+Map<BlogPostType, List<String>> postsPerType = blogPostDetails.stream()
+				  .collect(Collectors.groupingBy(BlogPost::getBlogPostType, 
+						  Collectors.mapping(BlogPost::getAuthor, Collectors.toList())));
+
+==>{NEWS=[R.k, Sudeep Ramam, Subramaniam], REVIEW=[kk.k, ksdgk, jkl.sr], GUIDE=[J.k.Rowling, H.C VERMA]}
+
+
+Map<BlogPostType, Double> avgLikes1 = blogPostDetails.stream()
+				  .collect(Collectors.groupingBy(BlogPost::getBlogPostType, 
+						  Collectors.averagingInt(BlogPost::getLikes)));
+
+==>{NEWS=322.0, REVIEW=1225.3333333333333, GUIDE=2600.0}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+************************   groupingByConcurrent()  *********************************
+
+link- https://stackabuse.com/guide-to-java-8-collectors-groupingbyconcurrent/
+
+It groups objects by a given specific property and store the end result in a ConcurrentMap.
+
+
+List<Book> books = Arrays.asList(
+			    new Book("The Lord of the Rings", "J.R.R. Tolkien", 1954),
+			    new Book("The Hobbit", "J.R.R. Tolkien", 1937),
+			    new Book("Animal Farm", "George Orwell", 1945),
+			    new Book("Nineteen Eighty-Four", "George Orwell", 1949),
+			    new Book("The Road to Wigan Pier", "George Orwell", 1937),
+			    new Book("Lord of the Flies", "William Golding", 1954)
+			);
+
+	---------------------------------------------------------------------------------------------------
+		
+		ConcurrentMap<String, List<Book>> booksByAuthor = books.stream().
+				collect(Collectors.groupingByConcurrent(Book::getAuthor));
+		
+		System.out.println(booksByAuthor);
+
+//
+//	{J.R.R. Tolkien=[Book [title=The Lord of the Rings, author=J.R.R. Tolkien, releaseYear=1954], 
+			Book [title=The Hobbit, author=J.R.R. Tolkien, releaseYear=1937]], 
+	William Golding=[Book [title=Lord of the Flies, author=William Golding, releaseYear=1954]], 
+	George Orwell=[Book [title=Animal Farm, author=George Orwell, releaseYear=1945], Book [title=Nineteen Eighty-Four, author=George Orwell, releaseYear=1949], 
+			Book [title=The Road to Wigan Pier, author=George Orwell, releaseYear=1937]]}	
+//
+//
+	---------------------------------------------------------------------------------------------------
+
+		ConcurrentMap<String, List<String>> booksByAuthor2 = books.stream()
+			    .collect(Collectors.groupingByConcurrent(Book::getAuthor, 
+			    		Collectors.mapping(Book::getTitle, Collectors.toList())));
+		
+		System.out.println(booksByAuthor2);
+
+// 	{J.R.R. Tolkien=[The Lord of the Rings, The Hobbit], 
+	 William Golding=[Lord of the Flies], 
+	 George Orwell=[Animal Farm, Nineteen Eighty-Four, The Road to Wigan Pier]}
+	
+	---------------------------------------------------------------------------------------------------
+	
+		ConcurrentMap<Integer, ConcurrentMap<String, List<String>>> booksByAuthor3 = books.stream()
+                .collect(Collectors.groupingByConcurrent(Book::getReleaseYear,
+                        Collectors.groupingByConcurrent(Book::getAuthor, 
+                        		Collectors.mapping(Book::getTitle, Collectors.toList()))));
+		
+		System.out.println(booksByAuthor3);
+
+//	{1937={J.R.R. Tolkien=[The Hobbit], George Orwell=[The Road to Wigan Pier]}, 
+	 1954={J.R.R. Tolkien=[The Lord of the Rings], William Golding=[Lord of the Flies]}, 
+	 1945={George Orwell=[Animal Farm]}, 
+	 1949={George Orwell=[Nineteen Eighty-Four]}}
+
+	---------------------------------------------------------------------------------------------------
+		
+		ConcurrentMap<Integer,List<String>> bookInYear= books.stream().collect(Collectors.
+				groupingByConcurrent(Book::getReleaseYear,
+						Collectors.mapping(Book::getTitle,Collectors.toList())));
+		System.out.println(bookInYear);
+
+//	{1937=[The Hobbit, The Road to Wigan Pier], 
+	1954=[The Lord of the Rings, Lord of the Flies], 
+	1945=[Animal Farm], 
+	1949=[Nineteen Eighty-Four]}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+********************************************* joining()**************************************
+
+Map<Integer, String> booksAndYear= books.stream().collect(Collectors.groupingBy(Book::getReleaseYear,
+				Collectors.mapping(Book::getTitle, Collectors.joining(", "))));
+
+{1937=The Hobbit, The Road to Wigan Pier, 
+1954=The Lord of the Rings, Lord of the Flies, 
+1945=Animal Farm, 
+1949=Nineteen Eighty-Four}
+
+
+	---------------------------------------------------------------------------------------------------
+
+String bookTitles = books.stream().map(e -> e.getTitle())
+                .collect(Collectors.joining(", "));
+
+The Lord of the Rings, The Hobbit, Animal Farm, Nineteen Eighty-Four, The Road to Wigan Pier, Lord of the Flies
+
+	---------------------------------------------------------------------------------------------------
+
+String bookAuthors= books.stream().map(e->e.getAuthor())
+				.collect(Collectors.joining(", " , "{{" , "}}"));
+
+", "  <--delimiter
+"{{"  <--prefix      -----------all separated by comma(,)
+"}}"  <--suffix
+		
+
+{{J.R.R. Tolkien, J.R.R. Tolkien, George Orwell, George Orwell, George Orwell, William Golding}}
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+************************   mapping()  *********************************
+
+mapping() is a static method of the Collectors class that returns a Collector. 
+It converts a Collector accepting elements of one type to a Collector that accepts elements of another type.
+
+	---------------------------------------------------------------------------------------------
+
+List<Integer> bookReleaseYear= books.stream().collect(Collectors.mapping(Book::getReleaseYear,
+				Collectors.toList()));
+
+[1954, 1937, 1945, 1949, 1937, 1954]
+
+	---------------------------------------------------------------------------------------------
+
+Map<Integer,List<String>> bookInYear= books.stream().collect(Collectors.
+				groupingBy(Book::getReleaseYear,
+						Collectors.mapping(Book::getTitle,Collectors.toList())));
+
+
+{1937=[The Hobbit, The Road to Wigan Pier], 1954=[The Lord of the Rings, Lord of the Flies], 1945=[Animal Farm], 1949=[Nineteen Eighty-Four]}
+
+	---------------------------------------------------------------------------------------------
+
+Map<Integer, ConcurrentMap<String, List<String>>> booksByAuthor3 = books.stream()
+                .collect(Collectors.groupingBy(Book::getReleaseYear,
+                        Collectors.groupingBy(Book::getAuthor, 
+                        		Collectors.mapping(Book::getTitle, Collectors.toList()))));
+
+{1937={J.R.R. Tolkien=[The Hobbit], George Orwell=[The Road to Wigan Pier]}, 
+1954={J.R.R. Tolkien=[The Lord of the Rings], William Golding=[Lord of the Flies]}, 
+1945={George Orwell=[Animal Farm]}, 1949={George Orwell=[Nineteen Eighty-Four]}}
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+************************   minBy()  *********************************
+
+link - https://www.techiedelight.com/collectors-minby-maxby-method-java/
+
+
+JavaDoc of Stream#min says that min is a terminal operation, so .collect(Collectors.minBy(...)) and .min(...) are interchangeable.
+
+
+Book minyear= books.stream().collect(Collectors.minBy((x,y)->x.getReleaseYear()-y.getReleaseYear())).get();
+
+Book [title=The Hobbit, author=J.R.R. Tolkien, releaseYear=1937]
+
+
+Empl maxSalaryEmp= employeeList.stream()
+				 .collect(Collectors.maxBy(Comparator.comparingDouble(Empl::getSalary))).get();
+Empl [name=Tom Jones, age=45, salary=15000.0]
+
+		 
+		 
+Empl minSalaryEmp= employeeList.stream().collect(Collectors.minBy(Comparator.comparingDouble(Empl::getSalary))).get();
+Empl [name=Tom Jones, age=45, salary=7000.0]
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+****************************************************partitioningBy*************************************************************
+
+Link - https://stackabuse.com/java-8-streams-definitive-guide-to-partitioningby/
+
+The partitioningBy() method always returns a Map with two entries - one for where the Predicate is true, and one for when it's false. 
+Both entries can have empty lists, but they will be present.
+
+Each of the elements from the Stream are tested against the predicate, and based on the resulting boolean value, 
+this Collector groups the elements into two sets and returns the result as Map<Boolean, List<T>>.
+
+Example explaining the basic concept of partitioning
+Suppose you have a collection of blocks. These blocks are in 2 colors – green and red. 
+Now, you want to partition the blocks into their separate color-coded groups.
+I.e. one collection of green blocks and another collection of red blocks.
+ ‘Color.isRed()’, results in 2 separate lists of objects being created. 
+
+These lists are in 2 separate entries in a Map. The objects which return true for ‘Color.isRed()’, 
+i.e. Red Color objects, are stored in the Map entry with key ‘true’. 
+Similarly, the remaining green objects which return false for ‘Color.isRed()’ condition are store in the Map entry with key ‘false’.
+The Color objects are thus partitioned into 2 Lists which can be retrieved by invoking Map.get(true) and Map.get(false) respectively.
+
+Advantage of partitioning using Collectors versus the Stream.filter() operation
+At the end of the partitioning operation, the method returns back both the groups of elements – 
+one that satisfy the given Predicate and the ones that don’t- together. 
+Filtering a stream can provide you the same two groups but you will need to invoke the filtering operation twice – 
+one with the given Predicate and the second time with the negation of that Predicate.
+
+
+Collectors.partitioningBy() method  a Predicate instance along with another Collector instance as the second input parameter. 
+
+While the 1st map entry has key true and value containing List<T> of elements that satisfy the Predicate condition, 
+the 2nd map entry has key false and value containing List<T> of elements which do not satisfy the Predicate condition.
+
+==> Map<Boolean,List<Employee>> employeeMap
+        = employeeList
+          .stream()
+          .collect(Collectors.partitioningBy((Employee emp) -> emp.getAge() > 30));
+
+{false=[John, Jane, Anna], true=[Michael, James]}
+
+
+==> Map<Boolean, List<String>> partitionStudentsByName = students.stream()
+    .collect(Collectors.partitioningBy(student->student.getName().length() > 8
+                                       && student.getAvgGrade() > 8.0,
+             Collectors.mapping(Student::getName, Collectors.toList())));
+
+{false=[John, Jane, Michael, Kyle], true=[Gabriella]}
+
+
+==> Map<Boolean, List<String>> likesGreaterThan1000 = blogPostDetails.stream()
+				.collect(Collectors.partitioningBy(x->x.getLikes()>1000 , Collectors.mapping(BlogPost::getTitle, Collectors.toList())));
+
+{false=[Fault in our stars, MUMBAI Times, Kesariya, H.C VERMA, limitless, Womens health], true=[Harry Potter, Lord of the rings]}
+
+
+==> Map<Boolean, Long> partitionByAvgGrade = students.stream()
+    .collect(Collectors.partitioningBy(student->student.getAvgGrade() > 8.0,
+             Collectors.counting()));
+
+{false=2, true=3}
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+**************************************************** reducing *************************************************************
+
+The JDK contains many terminal operations (such as average, sum, min, max, and count) that return one value by combining the contents of a stream. 
+These operations are called reduction operations.
+
+The reducing() collector is most useful when used in a multi-level reduction operation, downstream of groupingBy() or partitioningBy(). 
+Otherwise, we could reasonably substitute it with Stream.map() and Stream.reduce() to perform a simple map-reduce on a stream instead.
+
+The following example retrieves the total age of members of each gender:
+
+Map<Person.Sex, Integer> totalAgeByGender =
+    roster
+        .stream()
+        .collect(
+            Collectors.groupingBy(
+                Person::getGender,                      
+                Collectors.reducing(
+                    0,
+                    Person::getAge,
+                    Integer::sum)));
+The reducing operation takes three parameters:
+
+identity: Like the Stream.reduce operation, the identity element is both the initial value of the reduction and the default result if 
+	  there are no elements in the stream. 
+	  In this example, the identity element is 0; this is the initial value of the sum of ages and the default value if no members exist.
+mapper:   The reducing operation applies this mapper function to all stream elements. In this example, the mapper retrieves the age of
+ 	  each member.
+operation: The operation function is used to reduce the mapped values. In this example, the operation function adds Integer values.
+
+
+==> Map <BlogPostType,Integer>totalLikesByBlogPostType= blogPostDetails.stream().collect(Collectors
+				.groupingBy(BlogPost::getBlogPostType,Collectors.reducing(0,BlogPost::getLikes,Integer::sum)));
+
+	{NEWS=966, REVIEW=3676, GUIDE=5200}
+
+==> Stream<Integer> s = Stream.of(5, 10, 20, 50);
+        Integer i = s.collect(Collectors.reducing(1, (integer, integer2)
+                            -> integer2 * integer));
+
+	50000
+
+==>Stream<Integer> s = Stream.of(5, 10, 20, 50).parallel();
+        String str = s.collect(Collectors.reducing(
+                            "",
+                            x -> Integer.toString(x),
+                            (s1, s2) -> s1 + s2));
+	5102050
+
+
+
+You've provided an identity of an incorrect type - Integer, because numeric literal 0 is of type int.
+
+Meanwhile, the result of reduction should be of type Double. 
+That results in the type mismatch in the classifier function, since it gives a Double as required according to the resulting type of the map.
+
+To fix the compilation error, you need to change the identity to 0d or 0D.
+==> Map<Employee.Gender,Double> totalIncomeByGender = Employee.persons().stream()
+    .collect(Collectors.groupingBy(
+        Employee::getGender,
+        Collectors.reducing(0D, Employee::getIncome,Double::sum)
+    ));
+
+	{MALE=14454.0, FEMALE=6689.0} -----sum of all female salary and all male salary
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+******************************************* summarizingInt, summarizingLong, summarizingDouble  *************************************************************
+
+ calculate a bunch of statistical calculations for a given numerical value derived from the stream’s objects, and return these statistics 
+encapsulated inside objects of specially defined statistical classes for this purpose viz  IntSummaryStatistics, LongSummaryStatistics 
+& DoubleSummaryStatistics
+
+The statistical attributes encapsulated by the summary statistics classes are –
+count of numeric value derived
+sum of values
+minimum value
+maximum value
+average of all values
+
+
+we take an attribute suppose :
+age 
+
+SummarizingInt will give all th values of
+count - how many no of age
+sum - addition of all age
+min - minimum age in our collection
+max - maximum age in our collection
+avg - average age of our collection
+
+
+
+==> IntSummaryStatistics intSummaryStatistics = employeeList
+        .stream()
+        .collect(Collectors.summarizingInt(Employee::getAge));
+    System.out.println("IntSummaryStatistics for age: " + intSummaryStatistics);
+
+IntSummaryStatistics{count=5, sum=206, min=22, average=41.200000, max=65}
+
+--------------------------------------------------------------------------
+
+==> IntSummaryStatistics  statisticsOfLikes= blogPostDetails.stream()
+				.collect(Collectors.summarizingInt(BlogPost::getLikes));
+
+IntSummaryStatistics{count=8, sum=9842, min=66, average=1230.250000, max=4567}
+--------------------------------------------------------------------------
+
+==> LongSummaryStatistics longSummaryStatistics = employeeList
+        .stream()
+        .collect(Collectors.summarizingLong(Employee::getLeaves));
+
+LongSummaryStatistics{count=5, sum=1468, min=5, average=293.600000, max=1008}
+
+--------------------------------------------------------------------------
+
+==> DoubleSummaryStatistics doubleSummaryStatistics = employeeList
+        .stream()
+        .collect(Collectors.summarizingDouble(Employee::getSalary));
+
+DoubleSummaryStatistics{count=5, sum=49000.000000, min=7000.000000, average=9800.000000, max=15000.000000}
+
+--------------------------------------------------------------------------
+
+==> DoubleSummaryStatistics statisticsOfIncome= Employee.persons().stream().collect(Collectors.summarizingDouble(Employee::getIncome));
+
+DoubleSummaryStatistics{count=6, sum=21143.000000, min=1234.000000, average=3523.833333, max=7100.000000}
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Employee
+
+
+v v imp link	- https://javaconceptoftheday.com/solving-real-time-queries-using-java-8-features-employee-management-system/
+Link- https://www.techiedelight.com/collectors-minby-maxby-method-java/    <-- min max salary
+	https://www.javabrahman.com/java-8/java-8-finding-maxmin-with-collectors-maxby-minby-methods-tutorial-with-examples/
+
+1) Get All employee Salary/income
+
+	 Map<String,Double> incomeOfEmp= Employee.persons()
+			    		.stream()
+			    		.collect(Collectors.toMap(Employee::getName, Employee::getIncome));
+
+	{Jake=2343.0, Jode=1800.0, Jeny=1234.0, Jason=3211.0, Jack=7100.0, Jane=5455.0}
+
+
+2)Get Max salary Employee detail
+ 
+	Empl maxSalaryEmp= employeeList.stream()
+				 .collect(Collectors.maxBy(Comparator.comparingDouble(Empl::getSalary))).get();
+	Empl [name=Tom Jones, age=45, salary=15000.0]
+
+	 
+3)Get Min salary Employee details
+		 
+	Empl minSalaryEmp= employeeList.stream()
+				 .collect(Collectors.minBy(Comparator.comparingDouble(Empl::getSalary))).get();
+
+	Empl [name=Tom Jones, age=45, salary=7000.0]
+
+
+4) Get all Employee names
+
+	String nameOfEmp=employeeList.stream()
+				 .map(e->e.getName()).collect(Collectors.joining(", "));
+
+	Tom Jones, Tom Jones, Ethan Hardy, Nancy Smith, Deborah Sprightly
+
+
+
+5) Get employee name and age
+
+Map<String,Integer> empNameAndAge= employeeList.stream()
+				 .collect(Collectors.toMap(Empl::getName, Empl::getAge));
+
+{Deborah Sprightly=29, Ethan Hardy=65, Nancy Smith=22, Elia Jone=45, Tom Jones=45}
+
+6) Group with name and age
+
+Map<Integer, String> groupWithSameAge= employeeList.stream()
+				 .collect(Collectors.groupingBy(Empl::getAge,
+						 Collectors.mapping(Empl::getName,Collectors.joining(", "))));
+
+{
+	45=Tom Jones, Elia Jone, 
+	65=Ethan Hardy, 
+	22=Nancy Smith, 
+	29=Deborah Sprightly
+}
+
+
+7) Average Income/salary of employees
+
+	Double avgIncome=employeeList.stream().collect(Collectors.averagingDouble(Empl::getSalary));
+
+	9800.0
+
+8) Average age of employees
+	
+	Double avgAge=employeeList.stream().collect(Collectors.averagingInt(Empl::getAge));
+
+	41.2
+
+9) Max salary of an employee
+
+	String empWithMaxSalary= Employee.persons().stream()
+				.max(Comparator.comparing(Employee::getIncome))
+				.map(i->i.getName())
+				.get();
+	Jack walter
+
+
+9.1) Max Salary employee name and salary
+
+	Employee empNameWithMaxSalary= Employee.persons().stream().max(Comparator.comparing(Employee::getIncome)).get();
+	System.out.println("Employee with max salary : "+ empNameWithMaxSalary.getName()+ " : " +empNameWithMaxSalary.getIncome());
+
+	Jack walter : 7100.0
+
+
+10) Male and female employee count
+
+	Map<Employee.Gender,Long> genderCount=Employee.persons().stream()
+				.collect(Collectors.groupingBy(
+						Employee::getGender,
+						Collectors.counting()));
+
+	{FEMALE=2, MALE=4}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,380 @@
+To put content is the center  of the page:
+margin:auto;
+
+In css, we can define multiple classes for a single element
+(tag), by space separator
+Ex class="special1 special2"
+
+.special1{
+	border-left: solid black 5px;
+	border-right: solid black 5px;
+}
+
+.special2{
+	border-top: solid black 5px;
+	border-bottom: solid black 5px;
+}
+
+
+
+The Box model
+-------------
+Every HTML element is represented as a rectangular box.
+
+ex h1, p, div <- every element is represented as a rectangular box.
+
+Each Box has 4 edges(component):
+
+1. Content
+2. Padding <- space between content and border
+3. Border
+4. Margin <--from web page to border is margin
+	    <--from one html element to next html element
+		   the spacee between them is margin
+
+
+top-padding
+right-padding
+bottom-padding
+left-padding
+
+
+<body>
+	<h1> Boxx Model </h1>
+</body>
+
+
+
+h1{
+	border: solid 20px yellow;
+	width : 25%;  <-- width of border, 25% of 100%
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom : 40px;
+	padding-left : 30px;
+		or
+	padding: 20px 40px 60px 80px;
+		or
+	padding : 20px 40px;
+		or
+	padding: 20px 30px 40px;
+
+	margin-top: 100px;
+}
+
+
+padding: 20px 40px  60px   80px; <--clockwise
+	   top  right bottom left
+
+padding : 20px    40px
+	    top     left
+	    bottom  right
+
+top and bottom is 20px 
+left and right is 40px
+
+padding: 20px   30px    40px;
+         top    left    bottom
+                right
+
+top is 20px
+right and left is 30px 
+bottom is 40px
+
+
+--------------------------------------------
+
+default margin from top of web page to element 21.440 for first element
+
+
+margin : 20px    40px
+	    top     left
+	    bottom  right
+
+
+margin: 20px   30px    40px;
+         top    left    bottom
+                right
+
+top is 20px
+right and left is 30px 
+bottom is 40px
+
+
+vibgyor application:
+---------------------
+
+<h2> Vibgyor Application </h2>
+<table>
+	<tr>
+		<td id="one"></td>
+		<td id="two"></td>
+		<td id="three"></td>
+		<td id="four"></td>
+		<td id="five"></td>
+		<td id="six"></td>
+		<td id="seven"></td>
+	<tr>
+</table>
+
+
+h1{
+	border: solid 20px yellow;
+	width : 25%;  
+	text-align: center;
+	
+}
+
+table{
+	margin:auto;
+}
+
+td{
+	height:300px;
+	width:150px;
+	border: 6px solid white;
+	
+}
+
+#one{
+	background: violet;
+}
+
+#two{
+	background: indigo;
+}
+
+#three{
+	background: blue;
+}
+
+#four{
+	background: green;
+}
+
+#five{
+	background: yellow;
+}
+
+#six{
+	background: orange;
+}
+
+#seven{
+	background: red;
+}
+
+==========================================================
+
+Chess board implementation:
+
+8x8
+
+<h2> Chess board Implementation</h2>
+<table class="chess">
+	<tr>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+
+	</tr>
+	<tr>
+		
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+
+	</tr>
+
+	<tr>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+
+	</tr>
+	<tr>
+		
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+
+	</tr>
+	<tr>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+
+	</tr>
+	<tr>
+		
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+
+	</tr>
+	<tr>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+
+	</tr>
+	<tr>
+		
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+		<td class="black"></td>
+		<td class="white"></td>
+
+	</tr>
+
+	
+
+</table>
+
+
+
+table{
+	margin:auto;
+	border: black solid 15px;
+}
+
+td{
+	height:30px;
+	width:30px;
+	
+}
+
+
+
+.white{
+	background:white;
+	height:30px;
+	width:30px;
+}
+.black{
+	background:black;
+	height:30px;
+	width:30px;
+}
+==========================================================
+
+
+Tic Tac Toe Implementation:
+
+<table>
+	<tr>
+		<td></td>
+		<td class="special1"></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td class="special2"></td>
+		<td class="special2 special1"></td>
+		<td class="special2"></td>
+	</tr>
+	<tr>
+		<td></td>
+		<td class="special1"></td>
+		<td></td>
+	</tr>
+
+	
+</table>
+
+
+td{
+	height:100px;
+	width:100px;
+	
+	
+}
+
+.special1{
+	border-left: solid black 5px;
+	border-right: solid black 5px;
+}
+
+.special2{
+	border-top: solid black 5px;
+	border-bottom: solid black 5px;
+}
+
+
+table{
+	margin:auto;
+}
+
+td:hover{
+	background: yellow;
+	border: red 10px solid;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

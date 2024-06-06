@@ -1,0 +1,29 @@
+What Is Inheritance?
+
+Different kinds of objects often have a certain amount in common with each other.
+
+Object-oriented programming allows classes to inherit commonly used state and behavior from other classes. 
+Bicycle now becomes the superclass of MountainBike, RoadBike, and TandemBike.
+
+Bicycle 
+	MountainBike  
+	RoadBike	- all share the characteristics of bicycles 
+	TandemBike.	  (current speed, current pedal cadence, current gear). 
+
+Mountain bikes, road bikes, and tandem bikes, for example, all share the characteristics of bicycles (current speed, current pedal cadence, current gear). 
+Yet each also defines additional features that make them different:
+
+Each class is allowed to have one direct superclass, 
+and each superclass has the potential for an unlimited number of subclasses:	
+
+
+syntax -
+The syntax for creating a subclass is simple.
+At the beginning of your class declaration, use the extends keyword,
+followed by the name of the class to inherit from:
+
+class MountainBike extends Bicycle 
+
+
+Subclass inherits all the fields and methods of superclass
+and we can add additional, unique features too

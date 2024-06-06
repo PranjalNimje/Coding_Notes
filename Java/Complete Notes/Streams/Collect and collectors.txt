@@ -1,0 +1,2 @@
+
+Link - http://www.java2s.com/Tutorials/Java/Java_Stream/0290__Java_Stream_Collect_to_Map.htm

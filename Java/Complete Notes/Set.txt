@@ -1,0 +1,2 @@
+Duplicate values not allowed
+Insertion order not preserved

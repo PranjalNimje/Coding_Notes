@@ -1,0 +1,260 @@
+
+
+Array.forEach() function:
+
+num.forEach((value, index, array)=>{})
+
+num=[3,4,5,6,7,9,6,4,5,6,7,8]
+
+num.forEach(i=>console.log(i))
+num.forEach((element)=>console.log(element*element))
+
+--------------------------------------------------------------------------
+Adding elements with high indexes can create undefined "holes" in an array:
+
+const fruits = ["Banana", "Orange", "Apple"];
+fruits[6] = "Lemon";
+
+output - Banana
+	 Orange
+	 Apple
+	 undefined
+	 undefined
+	 undefined
+	 Lemon
+
+--------------------------------------------------------------------------
+
+When to Use Arrays. When to use Objects.
+JavaScript does not support associative arrays.
+
+You should use objects when you want the element 
+names to be strings (text).
+
+You should use arrays when you want the element 
+names to be numbers.
+
+--------------------------------------------------------------------------
+
+Array.from -
+
+used to create an array from any other object
+(convert object,string into array)
+
+Ex.
+
+let name="Rajesh"
+let arr_name= Array.from(name)
+console.log(name)
+console.log(arr_name)
+
+output -	Rajesh
+		[ 'R', 'a', 'j', 'e', 's', 'h' ]
+
+--------------------------------------------------------------------------
+for...of in array:
+
+(let element in num, print element)
+
+let name=[ 'R', 'a', 'j', 'e', 's', 'h' ]
+for(let i of name){
+	console.log(i)
+}
+
+output- R
+	a
+	j
+	e
+	s
+	h
+
+--------------------------------------------------------------------------
+for...in in array:
+
+(let element keys in num, print element keys)
+element keys are indexes in array.
+
+Ex.
+
+let name=[ 'R', 'a', 'j', 'e', 's', 'h' ]
+for(let i in num){
+	console.log(i)
+}
+
+output -0
+	1
+	2
+	3
+	4
+	5
+
+Ex.
+
+for(let i in name1){
+	console.log(name1[i] ,i)
+}
+
+output -R 0
+	a 1
+	j 2
+	e 3
+	s 4
+	h 5
+
+--------------------------------------------------------------------------
+
+map() : creates a new array by performing same operation on each array element
+
+const a=[1,2,3,4,5,6]
+a.map((value, index, array)=>{return value*value;})
+
+difference between map n foreach : 
+map creates a new array and forEach only loops through each element.
+
+Ex.
+
+const a=[1,2,3,4,5,6]
+a.map((value, index, array)=>{console.log(value*value);})
+		Equivalent to ==
+a.map((element)=>console.log(element*element)
+
+output- 1
+	4
+	9
+	16
+	25
+	36
+
+Ex.
+
+let square = a.map((value, index, array)=>
+  { return (value*value);})
+console.log(square)
+
+output- [ 1, 4, 9, 16, 25, 36 ]
+
+
+--------------------------------------------------------------------------
+filter() - filters an array with values that passes a test. Creates a new array
+
+Ex.
+
+let m=[33,4,2,11,7,55,84,0,23,5,3,5]
+let n= m.filter((value)=> {return value>=10;})
+console.log(m)
+console.log(n)
+
+output- [
+ 	33,  4, 2, 11, 7,
+ 	55, 84, 0, 23, 5,
+   	3,  5
+	]
+	[ 33, 11, 55, 84, 23 ]
+
+Ex
+
+let m=[33,4,2,11,7,55,84,0,23,5,3,5]
+let even_numbers=m.filter((value)=>{if(value%2==0)
+  return value;})
+let odd_numbers=m.filter((value)=>{
+  if(value%2!=0)
+    return value;
+})
+console.log(even_numbers)
+console.log(odd_numbers)
+
+output- [ 4, 2, 84 ]  	<==(even_numbers in m)
+	[
+  	33, 11, 7, 55, 	<==(odd_numbers in m)
+  	23,  5, 3,  5
+	]
+
+--------------------------------------------------------------------------
+reduce() - It returns a value (single value)
+	   The reduce() method runs a function on each array element to produce (reduce it to) a single value.
+	   The reduce() method works from left-to-right in the array. See also reduceRight().
+	   The reduce() method does not reduce the original array.
+
+
+  total 
+    or      second
+Firstvalue    or
+of an array next value
+   |          |
+(total,     value,     index, array)
+
+
+Ex.
+
+const numbers = [45, 4, 9, 16, 25];
+let sum = numbers.reduce(myFunction);
+
+function myFunction(total, value, index, array) {
+  console.log(total,value,index,  total + value)
+  return total + value;
+}
+console.log(sum)
+
+
+
+output - 45 4 1 49
+	 49 9 2 58
+	 58 16 3 74
+ 	 74 25 4 99
+ 	 99
+
+--------------------------------------------------------------------------
+
+Que 1  Create an array. Take input from user and add it to this array
+
+let arr1=[1,2,3,4,5,6,7,8,9]
+let a= prompt("Enter a number")
+a=Number.parseInt(a)
+arr1.push(a)
+console.log(arr1)
+
+
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 555]
+
+
+Que 2  keep adding numbers to the array unti 0 is added to the array
+
+let arr1=[1,2,3,4,5,6,7,8,9]
+let a=undefined
+while(a!=0){
+  a= prompt("Enter a number")
+  a=Number.parseInt(a)
+}
+arr1.push(a)
+console.log(arr1)
+
+Que 3 filter for numbers divisible by 10 from a given array
+
+let arr2= [33,22,3,60,7,99,5,30,1,0,3,10,4,500]
+let divisible_by_10= arr2.filter((i)=>{
+  if(i%10==0)
+    return i;
+})
+console.log(divisible_by_10)
+
+input - [33,22,3,60,7,99,5,30,1,0,3,10,4,500]
+output - [60, 30, 10, 500]
+
+
+Que 4 Create an array of square of given numbers
+
+let arr3= [9,8,7,6,5,4,3,2,1,0]
+let sqr=arr3.map((element)=> {return element*element;})
+console.log(sqr)
+
+input - [9,8,7,6,5,4,3,2,1,0]
+output- [81, 64, 49, 36, 25, 16, 9, 4, 1, 0]
+
+
+Que 5 Use reduce to calculate factorial of a given number from an array of first n natural numbers
+
+let arr4= [1,2,3,4,5]
+let fact= arr4.reduce((e1,e2)=>{return e1*e2;})
+console.log(fact)
+
+output - 120

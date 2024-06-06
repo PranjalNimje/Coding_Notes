@@ -1,0 +1,98 @@
+Types of Method References
+There are following types of method references in java:
+
+Reference to a static method.
+Reference to an instance method.
+Reference to a constructor.
+
+A. To refer to a method in an object 
+	Object :: methodName 
+
+B. To print all elements in a list
+
+	Following is an illustration of a lambda expression that just calls a single method in its entire execution: 
+
+	list.forEach(s -> System.out.println(s));
+  
+C. Shorthand to print all elements in a list 
+
+	To make the code clear and compact, In the above example, one can turn lambda expression into a method reference:
+
+	list.forEach(System.out::println); 
+
+Types of Method References:
+	Static Method Reference.
+	Instance Method Reference of a particular object.
+	Instance Method Reference of an arbitrary object of a particular type.
+	Constructor Reference.
+
+
+Type 1: Reference to a static method
+
+	If a Lambda expression is like:
+		// If a lambda expression just call a static method of a class 
+		(args) -> Class.staticMethod(args)  
+
+	Then method reference is like:
+		// Shorthand if a lambda expression just call a static method of a class 
+		Class::staticMethod  
+		Ex.  Employee::getAge
+
+
+Type 2: Reference to an instance method of a particular object
+	
+	If a Lambda expression is like:
+		// If a lambda expression just call a default method of an object 
+		(args) -> obj.instanceMethod(args) 
+
+	Then method reference is like:
+		// Shorthand if a lambda expression just call a default method of an object 
+		obj::instanceMethod 
+		Ex. Character::isWhitespace
+
+Type 3: Reference to an instance method of an arbitrary object of a particular type
+
+	If a Lambda expression is like:
+		// If a lambda expression just call an instance method of a  ObjectType 
+		(obj, args) -> obj.instanceMethod(args) 
+
+	Then method reference is like:
+		// Shorthand if a lambda expression just call an instance method of a ObjectType 
+		ObjectType::instanceMethod 
+		Ex. String::compareToIgnoreCase
+		    Integer::compareTo
+		    String::toLowerCase
+		    String:: toString
+
+Type 4: Constructor method reference
+
+	If a Lambda expression is like: 
+		// If a lambda expression just create an object 
+		(args) -> new ClassName(args) 
+
+	Then method reference is like: 
+		// Shorthand if a lambda expression just create an object 
+		ClassName::new 
+		Ex. Integer::new
+		    String ::new
+		    Employee::new
+		    .toArray(Bicycle[]::new);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

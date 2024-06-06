@@ -1,0 +1,166 @@
+JavaScript:
+-------------
+
+Actions/Verbs ==>Javascript
+
+JS meant for Front-End
+NodeJs for Backend or Python or Java
+
+
+Full Stack Web Development
+html css  <-- For Frontend
+any teach <-- For Backend
+
+
+
+
+Mean Stack Web Development
+M- MongoDB
+E- Express js
+A- AngularJs
+N- Nodejs
+--------------------------------------
+
+
+JS - to add functionality to the html
+
+
+1. JavaScript Developer's Console
+-----------------------------------
+Python IDE
+Snippet <- for small small coding go for developers console
+
+
+Open Browser window-> Right Click -> Inspect -> Console
+
+Short Cut : Ctrl+ shift + j 
+
+
+To clear console : clear()  OR ctrl+l
+
+In old versions, semicolon (;) was mandatory
+In new versions, Its not mandatory
+
+
+The 5 basic javaScript primitive data types:
+--------------------------------------------
+
+1. Number:
+------------
+number -- -ve +ve integer decimal value
+
+10
+10.5
+
+JS is a dynamically typed language
+So, its not imp to specify the type of data
+
+10+2
+10-2
+10/2
+10*2
+10**2 <-- power of operator 
+
+typeof x <-- typeof operator
+
+
+2. string
+----------
+any sequence of characters 
+"durga"  
+'durga'
+
+we can use double quotes as well as single quotes
+
++ operator for strings also
+'durga' + 'soft' ==>durgasoft
+
+
+'durga'+10==> this is valid=> durga10
+'durga'+true ==> durgatrue
+
+we can use escape characters also in string
+(\n - backslash n)
+
+'durga\nsoft'
+durga
+soft
+
+\t
+
+'durga'.length
+
+
+'durga'[0]->d
+'durga'[100] -> undefined
+'durga'[-100] -> undefined
+
+
+3.Boolean
+---------------
+true
+false
+
+typeof true
+
+
+
+JavaScript Variables:
+------------------------
+var variablename=variablevalue;
+
+var name='durga';
+
+typeof name;
+typeof isMarried;
+
+studentMobileNumber==>camel case convention
+(java,js follows camel case)
+
+student_mobile_number==>snake case convention
+(python follows snake case)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

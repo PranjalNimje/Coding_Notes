@@ -1,0 +1,519 @@
+
+***********************************************************************************************************************************************
+
+                                                      Streams
+
+https://docs.oracle.com/javase/8/docs/api/?java/util/stream/package-summary.html        -Function Chaining
+											-Collector methods in java
+
+For Examples:
+https://www.java2novice.com/java-8/streams/match-method-example/
+http://www.java2s.com/Tutorials/Java/Java_Stream/0290__Java_Stream_Collect_to_Map.htm
+
+***********************************************************************************************************************************************
+
+-Stream API is used to process collections of objects
+- A stream is a sequence of objects that supports various methods which can be pipelined to produce the desired result.
+-
+
+Streams can be obtained in a number of ways. Some examples include:
+
+	-From a Collection via the stream() and parallelStream() methods;
+	-From an array via Arrays.stream(Object[]);
+	-From static factory methods on the stream classes, such as Stream.of(Object[]), IntStream.range(int, int) or Stream.iterate(Object, UnaryOperator);
+	-The lines of a file can be obtained from BufferedReader.lines();
+	-Streams of file paths can be obtained from methods in Files;
+	-Streams of random numbers can be obtained from Random.ints();
+	-Numerous other stream-bearing methods in the JDK, including BitSet.stream(), Pattern.splitAsStream(java.lang.CharSequence), and JarFile.stream().
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Stream operations and pipelines
+
+Stream operations are divided into intermediate and terminal operations, and are combined to form stream pipelines. 
+A stream pipeline consists of a source (such as a Collection, an array, a generator function, or an I/O channel); 
+followed by zero or more intermediate operations such as Stream.filter or Stream.map; 
+and a terminal operation such as Stream.forEach or Stream.reduce.
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+startsWith is a string method we can use it in stream
+Similarly, we can use string methods, collections methods, methods created by us(like getId,getName) in streams.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Intermediate operations
+
+-returns a new stream
+-They are always lazy;
+- Intermediate operations are further divided into 
+						- stateless 
+						- stateful operations.
+
+Intermediate operation process the current stream data (if any) and then return a new stream.
+
+Examples:
+
+map()
+limit()
+filter()
+skip()
+flatMap()
+sorted()
+distinct()
+peek()
+
+Intermediate functions return a stream back.
+
+**********************         On any stream you can execute any number of intermediate operations,   ************************
+                               but the terminal operation should be single and written at last. 
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+Terminal operations
+
+- The JDK contains many terminal operations (such as average, sum, min, max, and count) that return one value by combining the contents of a stream. 
+	These operations are called reduction operations.
+
+- Terminal operation traverses the stream and either produces a result or a collection but not a new stream.
+
+- Terminal operations produces a non-stream (cannot be chained) result such as primitive value, a collection or no value at all.
+
+
+Examples
+
+collect()
+forEach()
+forEachOrdered()
+findAny()
+findFirst()
+toArray()
+reduce()
+count()
+min()
+max()
+anyMatch()
+allMatch()
+noneMatch()
+
+
+short-circuiting terminal operations:
+
+anyMatch
+allMatch
+noneMatch
+findFirst    
+findAny
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Reduction
+
+The JDK contains many terminal operations (such as average, sum, min, max, and count) that return one value by combining the contents of a stream. 
+These operations are called reduction operations.
+The JDK also contains reduction operations that return a collection instead of a single value. 
+Many reduction operations perform a specific task, such as finding the average of values or grouping elements into categories. 
+However, the JDK provides you with the general-purpose reduction operations reduce and collect, which this section describes in detail.
+
+
+.reduce - gives single value
+.collect - returns a collection 
+
+Ex.
+Integer totalAgeReduce = roster
+   .stream()
+   .map(Person::getAge)
+   .reduce(
+       0,
+       (a, b) -> a + b);
+
+.reduce(Identity, accumulator)
+
+identity: can be 0, it is both the initial value of the reduction and the default result if there are no elements in the stream.
+
+accumulator: The accumulator function takes two parameters: a partial result of the reduction (in this example, the sum of all processed integers so far) 
+and the next element of the stream (in this example, an integer). It returns a new partial result. 
+In this example, the accumulator function is a lambda expression that adds two Integer values and returns an Integer value:
+(a, b) -> a + b
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+stateful and stateless intermediate operations
+
+Stateful operations are  - skip()
+			 - distinct()
+			 - limit() 
+			 - sorted(). 
+
+Rest all other stream operations are stateless.
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+when you need one-to-one transformation, use map() or it's flavors
+for one-to-many transformation - flatMap() or it's flavors.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+java.util.stream
+Interface BaseStream<T,S extends BaseStream<T,S>>
+
+
+void		close()		-Closes this stream, causing all close handlers for this stream pipeline to be called.
+boolean		isParallel()	-Returns whether this stream, if a terminal operation were to be executed, would execute in parallel.
+Iterator<T>	iterator()	-Returns an iterator for the elements of this stream.
+S		onClose(Runnable closeHandler)	-Returns an equivalent stream with an additional close handler.
+S		parallel()	-Returns an equivalent stream that is parallel.
+S		sequential()	-Returns an equivalent stream that is sequential.
+Spliterator<T>	spliterator()	-Returns a spliterator for the elements of this stream.
+S		unordered()	-Returns an equivalent stream that is unordered.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Interface DoubleStream
+All Superinterfaces:
+AutoCloseable, BaseStream<Double,DoubleStream>
+
+public interface DoubleStream
+extends BaseStream<Double,DoubleStream>
+
+
+boolean				allMatch(DoublePredicate predicate)
+boolean				anyMatch(DoublePredicate predicate)
+				noneMatch()
+OptionalDouble			average()             			-arithmatic  mean
+Stream<Double>			boxed()
+static DoubleStream.Builder	builder()
+<R> R				collect(Supplier<R> supplier, ObjDoubleConsumer<R> accumulator, BiConsumer<R,R> combiner)
+static DoubleStream		concat(DoubleStream a, DoubleStream b)
+long				count()
+DoubleStream			distinct()
+static DoubleStream		empty()
+DoubleStream			filter(DoublePredicate predicate)
+OptionalDouble			findAny()
+OptionalDouble			findFirst()
+DoubleStream			flatMap(DoubleFunction<? extends DoubleStream> mapper)
+void				forEach(DoubleConsumer action)
+void				forEachOrdered(DoubleConsumer action)
+static DoubleStream		generate(DoubleSupplier s)
+static DoubleStream		iterate(double seed, DoubleUnaryOperator f)
+PrimitiveIterator.OfDouble	iterator()
+DoubleStream			limit(long maxSize)
+DoubleStream			map(DoubleUnaryOperator mapper)
+IntStream			mapToInt(DoubleToIntFunction mapper)
+LongStream			mapToLong(DoubleToLongFunction mapper)
+<U> Stream<U>			mapToObj(DoubleFunction<? extends U> mapper)
+OptionalDouble			max()
+OptionalDouble			min()
+boolean				noneMatch(DoublePredicate predicate)
+static DoubleStream		of(double... values)
+static DoubleStream		of(double t)
+DoubleStream			parallel()
+DoubleStream			peek(DoubleConsumer action)
+OptionalDouble			reduce(DoubleBinaryOperator op)
+double				reduce(double identity, DoubleBinaryOperator op)
+DoubleStream			sequential()
+DoubleStream			skip(long n)
+DoubleStream			sorted()
+Spliterator.OfDouble		spliterator()
+double				sum()
+DoubleSummaryStatistics		summaryStatistics()
+double[]			toArray()
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Class Collectors
+	java.lang.Object
+		java.util.stream.Collectors
+
+public final class Collectors
+extends Object
+
+
+static <T> Collector<T,?,Double>	averagingDouble(ToDoubleFunction<? super T> mapper)
+					Returns a Collector that produces the arithmetic mean of a double-valued 
+					function applied to the input elements.
+
+static <T> Collector<T,?,Double>	averagingInt(ToIntFunction<? super T> mapper)
+					Returns a Collector that produces the arithmetic mean of an integer-valued 
+					function applied to the input elements.
+
+static <T> Collector<T,?,Double>	averagingLong(ToLongFunction<? super T> mapper)
+					Returns a Collector that produces the arithmetic mean of a long-valued 
+					function applied to the input elements.
+
+static <T,A,R,RR> Collector<T,A,RR>	collectingAndThen(Collector<T,A,R> downstream, Function<R,RR> finisher)
+static <T> Collector<T,?,Long>		counting()
+static <T,K> Collector<T,?,Map<K,List<T>>>	groupingBy(Function<? super T,? extends K> classifier)
+static <T,K,A,D> Collector<T,?,Map<K,D>>	groupingBy(Function<? super T,? extends K> classifier, Collector<? super T,A,D> downstream)
+static <T,K,D,A,M extends Map<K,D>>
+Collector<T,?,M>				groupingBy(Function<? super T,? extends K> classifier, Supplier<M> mapFactory, Collector<? super T,A,D> downstream)
+static <T,K> Collector<T,?,ConcurrentMap<K,List<T>>>	groupingByConcurrent(Function<? super T,? extends K> classifier)
+static <T,K,A,D> Collector<T,?,ConcurrentMap<K,D>>	groupingByConcurrent(Function<? super T,? extends K> classifier, Collector<? super T,A,D> downstream)
+static <T,K,A,D,M extends ConcurrentMap<K,D>>
+Collector<T,?,M>				groupingByConcurrent(Function<? super T,? extends K> classifier, Supplier<M> mapFactory, Collector<? super T,A,D> downstream)
+static Collector<CharSequence,?,String>	joining()
+static Collector<CharSequence,?,String>	joining(CharSequence delimiter)
+static Collector<CharSequence,?,String>		joining(CharSequence delimiter, CharSequence prefix, CharSequence suffix)
+static <T,U,A,R> Collector<T,?,R>		mapping(Function<? super T,? extends U> mapper, Collector<? super U,A,R> downstream)
+static <T> Collector<T,?,Optional<T>>		maxBy(Comparator<? super T> comparator)
+static <T> Collector<T,?,Optional<T>>		minBy(Comparator<? super T> comparator)
+static <T> Collector<T,?,Map<Boolean,List<T>>>	partitioningBy(Predicate<? super T> predicate)
+static <T,D,A> Collector<T,?,Map<Boolean,D>>	partitioningBy(Predicate<? super T> predicate, Collector<? super T,A,D> downstream)
+static <T> Collector<T,?,Optional<T>>		reducing(BinaryOperator<T> op)
+static <T> Collector<T,?,T>			reducing(T identity, BinaryOperator<T> op)
+static <T,U> Collector<T,?,U>			reducing(U identity, Function<? super T,? extends U> mapper, BinaryOperator<U> op)
+static <T> Collector<T,?,DoubleSummaryStatistics>	summarizingDouble(ToDoubleFunction<? super T> mapper)
+static <T> Collector<T,?,IntSummaryStatistics>	summarizingInt(ToIntFunction<? super T> mapper)
+static <T> Collector<T,?,LongSummaryStatistics>	summarizingLong(ToLongFunction<? super T> mapper)
+static <T> Collector<T,?,Double>		summingDouble(ToDoubleFunction<? super T> mapper)
+static <T> Collector<T,?,Integer>		summingInt(ToIntFunction<? super T> mapper)
+static <T> Collector<T,?,Long>			summingLong(ToLongFunction<? super T> mapper)
+static <T,C extends Collection<T>>
+Collector<T,?,C>				toCollection(Supplier<C> collectionFactory)
+static <T,K,U> Collector<T,?,ConcurrentMap<K,U>>	toConcurrentMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper)
+static <T,K,U> Collector<T,?,ConcurrentMap<K,U>>	toConcurrentMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper, BinaryOperator<U> mergeFunction)
+static <T,K,U,M extends ConcurrentMap<K,U>>
+Collector<T,?,M>				toConcurrentMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper, BinaryOperator<U> mergeFunction, Supplier<M> mapSupplier)
+static <T> Collector<T,?,List<T>>		toList()
+static <T,K,U> Collector<T,?,Map<K,U>>		toMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper)
+static <T,K,U> Collector<T,?,Map<K,U>>		toMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper, BinaryOperator<U> mergeFunction)
+static <T,K,U,M extends Map<K,U>>
+Collector<T,?,M>				toMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper, BinaryOperator<U> mergeFunction, Supplier<M> mapSupplier)
+static <T> Collector<T,?,Set<T>>		toSet()
+
+
+// Accumulate names into a List
+     List<String> list = people.stream().map(Person::getName).collect(Collectors.toList());
+
+     // Accumulate names into a TreeSet
+     Set<String> set = people.stream().map(Person::getName).collect(Collectors.toCollection(TreeSet::new));
+
+     // Convert elements to strings and concatenate them, separated by commas
+     String joined = things.stream()
+                           .map(Object::toString)
+                           .collect(Collectors.joining(", "));
+
+     // Compute sum of salaries of employee
+     int total = employees.stream()
+                          .collect(Collectors.summingInt(Employee::getSalary)));
+
+     // Group employees by department
+     Map<Department, List<Employee>> byDept
+         = employees.stream()
+                    .collect(Collectors.groupingBy(Employee::getDepartment));
+
+     // Compute sum of salaries by department
+     Map<Department, Integer> totalByDept
+         = employees.stream()
+                    .collect(Collectors.groupingBy(Employee::getDepartment,
+                                                   Collectors.summingInt(Employee::getSalary)));
+
+     // Partition students into passing and failing
+     Map<Boolean, List<Student>> passingFailing =
+         students.stream()
+                 .collect(Collectors.partitioningBy(s -> s.getGrade() >= PASS_THRESHOLD));
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Class StreamSupport
+
+static DoubleStream	doubleStream(Spliterator.OfDouble spliterator, boolean parallel)
+static DoubleStream	doubleStream(Supplier<? extends Spliterator.OfDouble> supplier, int characteristics, boolean parallel)
+static IntStream	intStream(Spliterator.OfInt spliterator, boolean parallel)
+static IntStream	intStream(Supplier<? extends Spliterator.OfInt> supplier, int characteristics, boolean parallel)
+static LongStream	longStream(Spliterator.OfLong spliterator, boolean parallel)
+static LongStream	longStream(Supplier<? extends Spliterator.OfLong> supplier, int characteristics, boolean parallel)
+static <T> Stream<T>	stream(Spliterator<T> spliterator, boolean parallel)
+static <T> Stream<T>	stream(Supplier<? extends Spliterator<T>> supplier, int characteristics, boolean parallel)
+
+
+IntStream
+
+java.util.stream.IntStream 
+is a sequence of primitive integer values.
+The aggregate operations like max and average can be performed using sequential and parallel operations.
+
+-	rangeClosed(a,b):	The values from a to be are considered by incrementing 1.  Ex.	(13, 15) => 13,14,15
+- 	range(a,b) 	: 	Values from a to b-1 are considered.			   Ex.  (13, 15) => 13,14
+-	sum		: 	Calculates the sum of values.
+				We cannot apply forEach directy after this.
+-	sorted		: 	Values are sorted.
+
+
+LongStream
+
+java.util.stream.LongStream
+Methods are same like IntStream.
+
+DoubleStream
+
+java.util.stream.DoubleStream
+
+-	average	: 	Calculates the average.  Ex.	double val = DoubleStream.of(12.1,11.2,13.3).average().getAsDouble();
+			.average().getAsDouble();
+
+-	max	: 	Finds the max value.	 Ex.	val = DoubleStream.of(12.1,11.2,13.3).max().getAsDouble();
+			.max().getAsDouble();
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+How to create its streams?
+
+-	using .of operator 
+		ex. IntStream.of(13,4,15,2,8).sorted().forEach(s->System.out.print(s +" "));
+
+-	IntStream.rangeClosed(13, 15)
+
+-	IntStream.range(13,15)
+
+-	Use .of for DoubleStream
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+What is the difference between IntStream and Stream<Integer>? [duplicate]
+
+int[] someInts = {1, 2, 3, 4, 5};
+var intStream = Arrays.stream(someInts);
+var streamInteger = Arrays.stream(someInts).boxed();
+
+	- IntStream is a stream of primitive int values.
+	- Stream<Integer> is a stream of Integer objects.
+	- The bigger problem is space, since the overhead of Integer is quite large. 
+		An int is 4 bytes for the value, while an Integer is 4 bytes for the reference plus 16 bytes for the object, 
+		so Integer uses 20 bytes per value, i.e. 5 times the memory.
+	- Stream<Integer> operates on boxed values (Integer instead of primitive int) which takes significantly more memory 
+		and usually a lot of boxing/unboxing operations (depending on your code), 
+	 	whereas IntStream works with primitives.
+
+
+
+How is IntStream, DoubleStream, or LongStream better than regular stream in Java 8?
+
+Stream<Integer> etc. have to work with boxed values (Integer instead of primitive int) which 
+
+takes significantly more memory and usually a lot of boxing/unboxing operations (depending on your code). 
+
+Why only Int/Double/Long? Just because they were expected to be used most often.
+
+Same applies to OptionalInt and friends and all the functional interfaces.
+
+For collections (lists/maps/sets) there are many third-party libraries providing primitive specialization for the same reason. 
+
+Really the problem there is even more acute because with streams you don't (usually; sorted() is a counter-example) need to store many values in memory.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Methods inherited from class java.lang.Object
+clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Enum Collector.Characteristics
+java.lang.Object
+java.lang.Enum<Collector.Characteristics>
+java.util.stream.Collector.Characteristics
+
+static Collector.Characteristics	valueOf(String name)
+						Returns the enum constant of this type with the specified name.
+static Collector.Characteristics[]	values()
+						Returns an array containing the constants of this enum type, in the order they are declared.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Class Optional<T>
+java.lang.Object
+	java.util.Optional<T>
+
+
+static <T> Optional<T>		empty()
+boolean				equals(Object obj)
+Optional<T>			filter(Predicate<? super T> predicate)
+<U> Optional<U>			flatMap(Function<? super T,Optional<U>> mapper)
+T				get()
+int				hashCode()
+void				ifPresent(Consumer<? super T> consumer)
+boolean				isPresent()
+<U> Optional<U>			map(Function<? super T,? extends U> mapper)
+static <T> Optional<T>		of(T value)
+static <T> Optional<T>		ofNullable(T value)
+T				orElse(T other)
+T				orElseGet(Supplier<? extends T> other)
+<X extends Throwable> T		orElseThrow(Supplier<? extends X> exceptionSupplier)
+String				toString()
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+forEach(System.out::println)
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Stream.collect() method
+
+Link - https://www.logicbig.com/how-to/code-snippets/jcode-java-8-streams-stream-collect.html
+
+The collect() method of Stream class can be used to accumulate elements of any Stream into a Collection.
+It allows you to accumulate the result into a choice for containers you want like a list, set, or map.
+
+Programmers often confuse that the collect() method belongs to the Collector class but that's not true. 
+It is defined in Stream class and that's why you can call it on Stream after doing any filtering or mapping.
+
+The Collector class provides different methods like toList(), toSet(), toMap(), and toConcurrentMap() to 
+collect the result of Stream into List, Set, Map, and ConcurrentMap in Java.
+
+It also provides a special toCollection() method which can be used to collect Stream elements into a specified Collection 
+like ArrayList, Vector, LinkedList, or HashSet.
+
+-	.collect(Collectors.toSet())
+-	.collect(Collectors.toList())
+-	.collect(Collectors.toMap(Function.identity(), String::length));
+-		-.collect(Collectors.toMap(Function.identity(), Function.identity())); => toMap(k->k, v->v)
+-		-.collect(Collectors.toMap(Employee::getId,  Employee::getName));
+-		-.collect(Collectors.toMap(Employee::getGender,	Employee::getName, (oldValue, newValue)  ->  String.join(", ", oldValue,  newValue))); 
+-		-.collect(Collectors.toMap(Employee::getGender, p  ->  1L, (oldCount, newCount)  ->  newCount+oldCount));
+-		-.collect(Collectors.toMap(Employee::getGender, Function.identity(), 
+                                  (oldPerson, newPerson)  -> newPerson.getIncome() > oldPerson.getIncome() ? newPerson : oldPerson));
+
+-	.collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+
+toMap and Function.identity()
+
+Function is an interface | identity is its method | identity is  a static method
+hence, Function.identity()
+Function is a functional interface 
+whose identity method returns a Function that always returns its input arguments.
+identity function always returns its input arguments.
+
+Link-  http://www.java2s.com/Tutorials/Java/Java_Stream/0290__Java_Stream_Collect_to_Map.htm
+
+Since a Map like HashMap stores two objects i.e. key and value and Stream contains just one element, 
+you need to provide the logic to extract the key and value objects from the Stream element.
+
+The Function.identity() used here denotes that the same object is used as a key.
+
+Collectors.toCollection() Example
+You can use this method to convert a Stream into any Collection class, 
+e.g. ArrayList, HashSet, TreeSet, LinkedHashSet, Vector, PriorityQueue, etc.
+
+-		- .collect(Collectors.toCollection(ArrayList::new))
+-		- .collect(Collectors.toCollection(HashSet::new));
+-		- .collect(Collectors.toCollection(LinkedHashSet::new));
+-		- .collect(Collectors.toCollection(TreeSet::new));
+-		- .collect(Collectors.toCollection(PriorityQueue::new));
+
+
+
+
+
+
+
+

@@ -1,0 +1,10 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="anything.css">
+<title>this website uses external css</title>
+</head>
+<body>
+<p style="color:blue"> My name is Pranjal</p>
+hi
+</body>
+</html>

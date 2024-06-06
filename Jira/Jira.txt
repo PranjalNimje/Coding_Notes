@@ -1,0 +1,194 @@
+Jira is roject management and issue tracking tool
+Jira assumes you are using agile methodology
+Jira is agile tool
+Learning Jira requires learning some agile concepts
+
+
+Basics of agile
+Agile is a software develoment methodology centered 
+around helping teams get more stuff done by self organizing 
+their work.
+
+Agile is ever-evolving and changing. Its about constantly 
+improving as a team.
+
+Jira is agile tool. Digital tool
+
+Agile board-
+Ex of agile board
+ToDO  InProgress  Done
+
+In agile board we have different columns
+Steps we need to get project done
+
+
+Agile --Scrum
+	--Kanban
+
+Scrum has sprints.
+Kanban does not.
+
+Sprint- A sprint is a pre-determined amount of time where
+teams determine the work to get done
+
+
+Sprit Example
+
+1. Our team decided on  two week Sprint
+
+2. Every two weeks, our team holds a Sprint meeting
+
+In the srint meeting -
+	Start by ddiscussing last Sprint
+	What went well?
+	What didn't go well?
+	What can we do better next Sprint?
+	Discuss and agree on the work to be comleted  
+		in the next Sprint
+
+
+After two weeks, hold another Sprint meeting
+
+and keep going
+
+
+----------------------------------------------
+
+Kanban-
+
+with kanban its an ongoing process
+
+As you are working on things, new issues, new tickets are 
+added to the board at any given time
+
+
+--------------------------------------------------
+
+Jira-
+
+
+Issue Type-
+	Story
+
+
+
+User Story
+
+As a <type of user>,  I want <some goal> so that <some reason>.
+
+As a web developer, I want to be able to add users to jira
+so that my coworkers can report bugs.
+
+As a driver, I want my car's dashboard to be voice activated 
+so that I ccan get directions safely while driving.
+
+As a cashier, I want to have the total calculated for me 
+so that i can give the correct change back to the customer.
+
+No technical stuff mentioned 
+
+
+
+Epic
+
+An epic is a story that is too big for a single sprint. 
+Its broken down into multiple user stories.
+When those are done, the epic is complete.
+
+Epic 
+	-Story#1
+	-Story#2
+	-Story#3
+
+
+Epic (core functionality of our note taking app)
+
+	-Story#1 
+		As a driver, I want my car's dashboard to be
+		voice activated so that I ccan get 
+		directions safely while driving.
+
+	-Story#2
+		As a web developer, I want to be able to 
+		access an api so that i can extend the fun ctionality 
+		of the app
+
+	-Story#3
+		As a user I want to be able to share notes with 
+		my contacts so that I can collaborate with them.
+
+
+
+Stories in jira = User stories
+
+Epics in jira contain multiple user stories.
+
+
+-------------------------------------------
+
+Issues and projects
+
+Issues are containers for fields
+Field hold your data
+Example fields:
+	Description
+	Summary
+	Assignee
+	Due Date
+
+
+
+Projects are containers for issues.
+
+Issues -
+Stories, epics and bugs are types of issues in Jira
+
+projects - 
+Issues live inside your Jira projects
+You wont be  creating a lot of new projects all the time.
+
+
+Team Managed Vs Company Managed projects
+
+Team-managed projects do not require admin permissions
+to create
+All entities live inside the projects
+Fast and easy to set up and maintain
+
+Entities
+Issue types, statuses, resolutions, etc.
+
+Company-managed projects require jira administrative 
+permissions to create.
+Entities can be shared across other company managed projects
+Global entities
+Must be Jira admin to create
+More complicated to set up and maintain
+
+
+How to create team managed projects?
+
+In Jira,
+
+Go to projects -> Create projects -> pick a project
+template
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

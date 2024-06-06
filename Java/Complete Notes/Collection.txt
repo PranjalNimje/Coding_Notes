@@ -1,0 +1,11 @@
+List(I)
+- Insertion order preserved 
+- duplicates allowed
+	-ArrayList
+	-LinkedList
+	-Vector
+	   -Stack
+
+Set(I)
+-Insertion order not preserved
+-Duplicates not allowed

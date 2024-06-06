@@ -1,0 +1,67 @@
+Time complexity and memory complexity
+
+memory is cheap.Hence, we are not concerned with it
+
+O(1) = constant
+O(logn) = logarithmic (log to the base 2)
+O(n) = linear
+o(nlogn) = n log-star n (log to the base 2)
+O (n2) = quadratic (n square)
+
+Best to worst
+
+O(1) -> O(logn) -> root of n ->  O(n) -> O(nlogn) -> O(n2)
+
+Arrays have static length
+
+Arrays of strings<- its an object. and reference values are passed while dealing with objects
+
+Array - contiguous block in memory
+Every element occupies the same amount of space in memory
+
+Objects -> whats stored in array is the address of those objects. Ex array of string
+
+memory address x
+size of each element y
+memory address of ith element = x * i + y
+
+
+Ex. 2n+2 --> O(n)
+
+Disadvantages of arrays
+
+
+_________________________________________________________________________________
+
+BubbleSort
+
+
+public class BubbleSort {
+    public static void main(String[] args) {
+        int[] arr= {1, 5,23,9,4 };
+        System.out.println("Before sorting : "+ arr);
+        for(int i=0; i<arr.length; i++){
+            System.out.println(arr[i]);
+        }
+
+        //Bubble sorting
+        for(int lastUnsortedIndex=arr.length-1; lastUnsortedIndex>0; lastUnsortedIndex-- ){
+            for(int i=0; i<lastUnsortedIndex; i++){
+                if( arr[i]>arr[i+1]){
+                    int temp= arr[i];
+                    arr[i]=arr[i+1];
+                    arr[i+1]=temp;
+                }
+            }
+        }
+	// 
+
+        System.out.println("After sorting : "+ arr);
+        for(int i=0; i<arr.length; i++){
+            System.out.println(arr[i]);
+        }
+
+    }
+}
+
+

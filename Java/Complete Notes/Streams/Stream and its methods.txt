@@ -1,0 +1,570 @@
+Stream
+
+link-https://www.benchresources.net/java/collection-framework/
+
+
+boolean				allMatch(DoublePredicate predicate)
+boolean				anyMatch(DoublePredicate predicate)
+				noneMatch()
+OptionalDouble			average()             			-arithmatic  mean
+Stream<Double>			boxed()
+static DoubleStream.Builder	builder()
+<R> R				collect(Supplier<R> supplier, ObjDoubleConsumer<R> accumulator, BiConsumer<R,R> combiner)
+static DoubleStream		concat(DoubleStream a, DoubleStream b)
+long				count()
+DoubleStream			distinct()
+static DoubleStream		empty()
+DoubleStream			filter(DoublePredicate predicate)
+OptionalDouble			findAny()
+OptionalDouble			findFirst()
+DoubleStream			flatMap(DoubleFunction<? extends DoubleStream> mapper)
+void				forEach(DoubleConsumer action)
+void				forEachOrdered(DoubleConsumer action)
+static DoubleStream		generate(DoubleSupplier s)
+static DoubleStream		iterate(double seed, DoubleUnaryOperator f)
+PrimitiveIterator.OfDouble	iterator()
+DoubleStream			limit(long maxSize)
+DoubleStream			map(DoubleUnaryOperator mapper)
+IntStream			mapToInt(DoubleToIntFunction mapper)
+LongStream			mapToLong(DoubleToLongFunction mapper)
+<U> Stream<U>			mapToObj(DoubleFunction<? extends U> mapper)
+OptionalDouble			max()
+OptionalDouble			min()
+boolean				noneMatch(DoublePredicate predicate)
+static DoubleStream		of(double... values)
+static DoubleStream		of(double t)
+DoubleStream			parallel()
+DoubleStream			peek(DoubleConsumer action)
+OptionalDouble			reduce(DoubleBinaryOperator op)
+double				reduce(double identity, DoubleBinaryOperator op)
+DoubleStream			sequential()
+DoubleStream			skip(long n)
+DoubleStream			sorted()
+Spliterator.OfDouble		spliterator()
+double				sum()
+DoubleSummaryStatistics		summaryStatistics()
+double[]			toArray()
+
+
+Collection- represent a group of object as a  single entity
+Stream- to process objects from the collection we have stream
+
+Wherever we find group of elements or arrays , we can apply streams concept
+Ex.
+Stream<Integer> s= Stream.of(9,33,332,6544); <-- no array, no collection still we can apply streams concept
+s.forEach(System.out::println);
+
+I/O stream and streams is different.
+I/O stream- process data
+stream-  process collection
+
+Stream s= c.stream();  <--stream object
+c->collection
+
+java.util.stream pkg
+
+Advantage-
+Concise code
+
+---------------------------------------------------------------------
+
+filter -
+
+To filter elements based on some condition
+
+filter(Predicate)-> the return type of predicate is always a boolean valued function
+			To perform conditional checks
+
+map(Function) -> not boolean valued, can return int, float,double.
+		To do business logic or some operationsS
+
+get stream() first	-> c.stream()
+filter based on which condition(Predicate) -> .filter(i->i%2)
+Predicate is a functional interface
+Functional interface can be replaced with lambda expression
+Predicate->Functional interface ->Lambda expression
+Once configure this element collect the elements in List -> (.collect(Collectors.toList()))
+
+Ex.
+.filter(i->i.getLikes()>1000).map(i->i.getTitle()).collect(Collectors.toList());
+
+Ex.
+.filter(Customer::hasOverHundredPoints)
+
+public boolean hasOverHundredPoints() {
+    return this.points > 100;
+}
+
+Ex.
+.filter(c -> c.getPoints() > 100 && c.getName().startsWith("Charles"))
+
+
+---------------------------------------------------------------------
+
+Map -
+
+Ex. for every student can you add 5 grace marks
+Ex. .map(i->i*5)
+
+For every object if you want to perform some function and you want some present object then you shd go for map
+For every object if you want a new object after some operation(square, cube, power)
+
+Similar methods- 
+
+IntStream 	mapToInt(ToIntFunction<? super T> mapper)
+LongStream 	mapToLong(ToLongFunction<? super T> mapper)
+DoubleStream 	mapToDouble(ToDoubleFunction<? super T> mapper)
+
+Ex
+ .filter(p ->p.price> 30000)   // filtering price  
+ .map(pm ->pm.price)          // fetching price  
+
+Ex.
+.map(number -> number * 3).forEach(System.out::println);
+
+Ex.
+.map(String::toUpperCase)
+.map(Integer::valueOf)  valueOf -> converts long,float, double, int,character to string or vice versa
+Here the mapper function Integer::valueOf() takes one string from the Stream at a time, 
+and convert the String to an Integer.
+
+Ex.
+.map( e -> e.getSalary() ).distinct()
+
+Ex.
+.map(n -> Integer.parseInt(n))
+.map(n -> new Point(n.X * 2, n.Y * 2))
+
+
+filter:
+------------
+input-->10 elements
+output--> 0 to 10  or  <=10
+
+map:
+--------------
+input --> 10 elements
+output --> 10
+
+
+---------------------------------------------------------------------
+
+count()
+
+To count how many objects are there in the stream
+returns long
+
+Ex.
+long  numberOfBlogPost= blogPostDetails.stream().count();
+
+
+---------------------------------------------------------------------
+
+Sorted()
+
+.sorted() --> natural sorting order
+.sorted(Comparator.reverseOrder()) --> reverse sorting order
+
+Ex.
+.sorted(Comparator.comparingInt(User::getAge))
+.sorted(Comparator.comparingInt(User::getAge).reversed())
+
+.sorted((o1, o2) -> o1.getName().compareTo(o2.getName()))==.sorted(Comparator.comparing(User::getName))
+
+Two ways to sort by reverse order
+1)supply a Comparator and swith the order
+	Ex.	.sorted(Comparator.reverseOrder())
+
+2) Simply use Collections.reverseOrder() in the sorted() call
+	Ex.	.sorted(Collections.reverseOrder())
+
+
+Ex.
+List<String> sortedUsingLikes= blogPostDetails.stream()
+				.sorted(Comparator.comparingInt(BlogPost::getLikes)).map(i->i.getTitle())
+				.collect(Collectors.toList());
+
+Ex.
+List<String> sortUsingIncome =Employee.persons().stream() .sorted(Comparator.comparingDouble(Employee::getIncome))
+		 .map(i->i.getName())
+		 .collect(Collectors.toList());
+
+Ex.
+.sorted(Comparator.comparingInt(User::getAge).reversed())
+
+Ex.
+List<String> dishNameSorted= list.stream()
+				.map(Dish::getName)
+				.sorted()
+				.toList();
+
+Ex.
+List<String> dishNameSortedReverse = list.stream()
+				.map(Dish::getName)
+				.sorted(Comparator.reverseOrder())
+				.collect(Collectors.toList());
+
+---------------------------------------------------------------------
+
+min()
+max()
+
+Whenever we talk about min, max element, compulsory we have to talk about sorting
+
+Ascending order => 	[5,3,10,15,4]     For ascending order
+			[3,4,5,10,15]		min=3
+			 |         |            max=15
+			min       max
+
+Descending order => 	[15,10,5,4,3]	  For descending order
+			  |        |		min=15
+			 min      max		max=3
+
+min(Comparator)
+max(Comparator)
+
+Stream.max(comparator) : It is a terminal operation that returns the maximum element of the stream according to the provided Comparator.
+Stream.min(comparator) : It is a terminal operation that returns the minimum element of the stream according to the provided Comparator.
+
+Ex.
+Integer maxNumber = Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9)
+          .max(Comparator.comparing(Integer::valueOf))
+          .get();
+
+Ex.
+String maxChar = Stream.of("H", "T", "D", "I", "J")
+            .max(Comparator.comparing(String::valueOf))
+            .get();
+
+Ex.
+Comparator<Employee> comparator = Comparator.comparing( Employee::getAge );
+ 
+// Get Min or Max Object
+Employee minObject = employees.stream().min(comparator).get();
+Employee maxObject = employees.stream().max(comparator).get();
+
+Ex.
+Comparator<BlogPost> comparator =Comparator.comparing(BlogPost::getLikes);
+BlogPost minObj= blogPostDetails.stream().min(comparator).get();
+
+BlogPost [title=Womens health, author=Subramaniam, blogPostType=NEWS, likes=66]
+
+Ex.
+Comparator<Employee> comparator =Comparator.comparing(Employee::getIncome);
+Employee minObj= Employee.persons().stream().min(comparator).get();
+
+Employee [id=5, name=Jeny, gender=FEMALE, dob=1975-12-13, income=1234.0]
+
+Ex.
+Employee with minimum salary : 
+Comparator<Employee> comp= Comparator.comparing(Employee::getIncome);
+String empWithMinSalary= Employee.persons().stream().min(comparator)
+				.map(i->i.getName()).get();
+
+Jeny Bells
+
+Employee with maximum salary:
+String empWithMaxSalary= Employee.persons().stream()
+				.max(Comparator.comparing(Employee::getIncome))
+				.map(i->i.getName())
+				.get();
+---------------------------------------------------------------------
+
+forEach()
+
+If you want to process each element of the stream
+
+l===>10 elements
+
+for(Integer i:l)
+{                      =====  l.stream().forEach(Function)
+	Sopln(l);
+}
+
+.forEach(System.out::println)
+
+function ==> lambda expression ==> double colon operator
+
+
+Ex (Remember to write toString method)
+
+Employee.persons().stream().forEach(System.out::println);
+
+Employee [id=1, name=Jake, gender=MALE, dob=1971-01-01, income=2343.0]
+Employee [id=2, name=Jack, gender=MALE, dob=1972-07-21, income=7100.0]
+Employee [id=3, name=Jane, gender=FEMALE, dob=1973-05-29, income=5455.0]
+Employee [id=4, name=Jode, gender=MALE, dob=1974-10-16, income=1800.0]
+
+Ex.
+Consumer <Integer> c = i ->{
+		System.out.println("The Square of "+ i +" is "+ i*i);
+};
+l.stream().forEach(c);
+
+
+---------------------------------------------------------------------
+
+toArray()
+
+To convert stream of objects/element into array
+Arrays is performance-wise good as compared to collections concept
+If we are not going to add or delte anymore elements highly recommended arrays concept
+
+The easiest method is to use the toArray(IntFunction<A[]> generator) method with an array constructor reference.The easiest method is to use the toArray(IntFunction<A[]> generator) 
+method with an array constructor reference.
+Ex.
+String[] stringArray = stringStream.toArray(String[]::new);
+
+Ex.
+Integer[] i= l.stream().toArray(Integer[]::new);
+Stream.of(i).forEach(System.out::println);
+for(Integer i1:: i )
+{
+	Sopln(i1);
+}
+
+Ex.
+Person[] men = people.stream()
+                          .filter(p -> p.getGender() == MALE)
+                          .toArray(Person[]::new);
+
+----------------------------------------------------------------------
+allMatch()
+
+Stream allMatch(Predicate predicate) returns whether all elements of this stream match the provided predicate. 
+It may not evaluate the predicate on all elements if not necessary for determining the result. 
+
+returns true if either all elements
+of the stream match the provided predicate or 
+the stream is empty, otherwise false.
+
+Ex.
+boolean answer = list.stream().allMatch(n-> n % 3 ==0);
+boolean answer = stream.allMatch(str -> str.length() > 2);
+boolean answer = stream.allMatch(str-> Character
+                       .isUpperCase(str.charAt(1)));
+
+Stream.allMatch() method returns true if all the elements of the stream match the provided predicate condition.
+Stream.anyMatch() method returns true if at least 1 of the elements of the stream match the provided predicate condition.
+Stream.noneMatch() method returns true if none of the elements of the stream match the provided predicate condition.
+
+// All match
+boolean allMatch = people.stream().allMatch(person - > person.getAge() > 8);
+
+// Any match
+boolean anyMatch = people.stream().anyMatch(person - > person.getAge() > 110);
+
+// None match
+boolean noneMatch = people.stream().noneMatch(person - > person.getName().equals("Antonio"));
+
+-----------------------------------------------------------------------------
+
+OptionalDouble average()
+
+OptionalDouble is a container object which may or may not contain a double value.
+
+
+-----------------------------------------------------------------------------
+
+boxed()
+
+int to Integer
+double to Double
+long to Long
+
+convert primitive values to Boxed to an Integer,Double,Long
+
+In Java stream API there are primitive specializations of Stream named IntStream, LongStream and DoubleStream and 
+each of these interfaces has a boxed() method that returns a Stream consisting of the elements of this stream, 
+each boxed to an Integer, Long or Double respectively.
+
+If you want to convert a stream of primitives int, long, double to a stream of respective wrapper objects 
+i.e. Integer, Long, Double then Java Stream API has a boxed() method to do this job.
+
+boxed() method is only applicable for int, double,long and not for byte, float
+
+Ex.
+// creating int stream
+IntStream intStream = IntStream.of(1, 2, 3, 4, 5);
+        
+// using boxed() method for boxing primitive int.
+List intList = intStream.boxed().collect(Collectors.toList());
+
+----------------------------------------------------------------------------------
+
+unboxing (unboxing in not a method.It is a concept)
+
+When you need to convert an object into primitive type on stream operation ? 
+This process is called unboxing.
+
+Stream provides mapToXxx and flatMapToXxx methods to unbox primitive streams.
+
+Ex.
+int sum = Stream.of(4, 6)
+        .mapToInt(i -> i)
+        .sum();
+System.out.println(sum); //output: 10
+
+-----------------------------------------------------------------------------------
+
+concat()
+
+Stream.concat() method is used to merge two streams into one stream which consist of all elements of both merged streams.
+creates a lazily concatenated stream whose elements are all the elements of the firstStream followed by all the elements of the secondStream.
+
+
+Ex.
+Stream<Integer> resultingStream = Stream.concat(firstStream, secondStream);
+
+****how to concatenate multiple streams?
+
+Stream<Integer> resultingStream = Stream.concat(first, concat(second, concat(third, fourth)));
+
+
+****Java merge streams and retain unique elements
+we can use distinct() API and resulting stream will contain only unique elements.
+Ex.
+Stream<Integer> resultingStream = Stream.concat(firstStream, secondStream)
+                        .distinct();
+firstStream: 	123456
+secondStream:   456789    <====It wont contain any element twice bcoz all are distinct
+resultingStream: 123456789
+
+
+**** merging streams of custom objects, we can drop the duplicate elements during stream iteration. 
+We can use the distinctByKey() function created for java stream distinct by object property
+Ex.
+Stream<Employee> resultingStream = Stream.concat(stream1, stream2)
+        .filter(distinctByKey(Employee::getFirstName));
+
+Ex.
+Stream<String> stream3 = Stream.concat(stream1.filter(x -> x.length()<4), stream2);
+
+Stream.concat(Stream.concat(stream1, stream2), stream3); //[a, b, c, d, e, f, g, h, i, j]
+Stream.concat(Stream.concat(stream2, stream1), stream3); //[e, f, g, a, b, c, d, h, i, j]
+
+
+
+-----------------------------------------------------------------------------------
+distinct()
+
+distinct() returns a stream consisting of distinct elements in a stream.
+Every value is unique becoz thrs noott copy of any element
+
+Ex.
+List<String> distinctElements = list.stream()
+                                 .distinct()
+                                 .collect(Collectors.toList())
+
+
+****Find Distinct Objects by Complex Keys
+distinctByKey()
+The distinctByKey() function uses a ConcurrentHashMap instance to find out if there is an existing key with the same value – 
+where the key is obtained from a function reference.
+Ex.
+// Get distinct objects by key
+List<Person> distinctElements = list.stream()
+            .filter( distinctByKey(p -> p.getFname() + " " + p.getLname()) )
+            .collect( Collectors.toList() );
+
+persons.stream().filter(distinctByKey(Person::getName))
+
+-----------------------------------------------------------------------------------
+empty
+
+Stream empty() creates an empty sequential Stream.
+
+Stream<String> stream = Stream.empty();
+
+-----------------------------------------------------------------------------------
+reduce
+
+Link- https://www.youtube.com/watch?v=EFyQCGX7sRs
+
+The reduce() method combines a stream into a single object.
+It is a reduction, which means it processes all elements.
+The most common way of doing a reduction is to start with an initialvalue and keep merging it with next value.
+
+reduce(identity,accumulator)
+identity: initial value of reduction and also what is returned if the stream is empty.
+accumulator: combines the current result with the current value in the stream
+
+Ex.
+String name=Stream.of("M","i","k","e").reduce("",(s,c)->s+c);
+s->initial value
+c->first value == "M"
+
+When we dont write identiy, an optional is returned because there may 
+not be any data (all the elements could have been filtered out earlier).
+There are 3 possible results :
+	a) empty stream => empty Optional returned
+	b) one element in stream => that element is returned
+	c) multiple elements in stream => accumulator is applied
+
+
+Ex.
+Integer val= Stream.of(1,2,3).reduce(99, (a,b)->a);
+output: 99		
+		
+Integer value= Stream.of(1,2,3).reduce(99, (a,b)->b);
+output: 3
+
+-----------------------------------------------------------------------------------
+
+Stream findFirst() returns an Optional (a container object which may or may not contain a non-null value) 
+describing the first element of this stream, or an empty Optional if the stream is empty. 
+If the stream has no encounter order, then any element may be returned.
+
+
+-----------------------------------------------------------------------------------
+
+Arrays.stream(arr)  vs  Stream.of(strm)  vs  Arrays.asList
+
+Arrays.stream(arr)
+
+-Class Arrays
+	java.lang.Object
+		java.util.Arrays
+-Arrays class have a method called asList() i.e. Arrays.asList() 
+This class also contains a static factory that allows arrays to be viewed as lists. i.e asList method
+
+asList
+- Returns	:	a list view of the specified array 
+- List<T>
+- Ex. List<String> stooges = Arrays.asList("Larry", "Moe", "Curly");
+
+
+1. For primitives arrays, Arrays.stream() and Stream.of() have different return types
+
+For example, 
+	if we pass a primitive integer array, the Stream.of() method returns Stream<int[]>, whereas Arrays.stream() returns an IntStream.
+	If input : int[] arr;
+	Stream.of(arr) 		==>   	returns Stream<int[]>
+	Arrays.stream(arr) 	==>	returns IntStream
+
+
+2. Since Stream.of() returns Stream<int[]> with integer array, we need to explicitly convert it into IntStream before consuming,
+	using mapToInt, mapToDouble, mapToLong or flatMapToInt, flatToDouble, flatToLong
+
+int[] array = { 1, 2, 3, 4, 5 };
+Stream.of(array)                        // returns `Stream<int[]>`
+    .flatMapToInt(Arrays::stream)       // returns IntStream
+    .forEach(System.out::println);
+
+		mapToInt	returns		IntStream
+		mapToDouble	returns 	DoubleStream
+		mapToLong 	returns		LongStream
+
+
+3. Arrays.stream() method is overloaded for primitive arrays of int, long, and double type. For other primitive types, Arrays.stream() won’t work. 
+   It returns IntStream for an int[] array, LongStream for a long[] array and DoubleStream for a double[] array. 
+   On the other hand, Stream.of() has no overloaded method for primitive arrays. 
+
+   Since arrays are also objects in Java, the Stream.of method will be invoked when we pass a primitive array to Stream.of().
+
+
+
+
+
+
+

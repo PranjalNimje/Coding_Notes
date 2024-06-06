@@ -1,0 +1,46 @@
+
+body{
+font-family: 'Comfortaa', cursive;
+font-family: 'Kolker Brush', cursive;
+text-align:center;
+font-size:60px;
+}
+td{
+	height:100px;
+	width:100px;
+	
+	
+}
+
+.special1{
+	border-left: solid black 5px;
+	border-right: solid black 5px;
+}
+
+.special2{
+	border-top: solid black 5px;
+	border-bottom: solid black 5px;
+}
+
+
+table{
+	margin:auto;
+}
+
+td:hover{
+	background: yellow;
+	border: red 10px solid;
+}
+
+
+h1:active {
+
+  color: blue;
+}
+
+
+
+
+
+
+

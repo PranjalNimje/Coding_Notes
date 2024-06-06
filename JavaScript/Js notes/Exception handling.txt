@@ -1,0 +1,58 @@
+Bug-
+When a bug happens, our program keeps running, 
+but it behaves in a way we didn't intend. 
+
+Error-
+When an error happens, our program stops running as 
+the result of an error.
+
+syntax, reference and type errors
+
+Bug-
+When we want to add 1+2 but instead of 3 we get 12
+due to string concatenation
+
+add(1,2)   -> gives 3
+add("1", 2)-> gives 12
+
+This is called a bug.
+
+Error-
+
+Reference Error-
+
+console.log(C+d);
+console.log("This is a reference error: c not defined");
+
+VM225:1 Uncaught ReferenceError: C is not defined
+    at <anonymous>:1:13
+
+When we run this program, it did not give any output, 
+directly error.
+
+
+Syntax Error-
+
+A piece of code that javascript cannot read.
+
+var greeting="hello;
+VM385:1 Uncaught SyntaxError: Invalid or unexpected token
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

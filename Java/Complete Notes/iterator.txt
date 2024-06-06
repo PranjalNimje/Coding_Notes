@@ -1,0 +1,68 @@
+while(iterator.hasNext()){
+    if(collection2.contains(iterator.next()))
+       System.out.println("duplicate");
+}
+
+Imagine that the iterator is a pointer to an element of your list.
+
+When you call next(), you're moving this pointer one step ahead.
+
+If you don't move the pointer, hasNext() will always be true because you're still in the beginning of the list.
+
+So you have to call the iterator's next() until there isn't any remaining element in the list.
+
+--------------------------------------------------------------------------------------------------------------------
+
+Iterable and Iterator in java
+
+java.util.Collection interface extends to java.util.Iterable. Iterable has a method that produces the iterator. 
+If any class implements iterable, it has an iterator method that produces java.util.Iterator.
+
+--------------------------------------------------------------------------------------------------------------------
+
+1)Iterable interface forces its subclasses to implement abstract method 'iterator()'.
+
+public interface Iterable {
+  ...
+  abstract Iterator<T> iterator(); //Returns an 'Iterator'(not iterator) over elements of type T.
+  ...
+}
+
+2)Iterator interface forces its subclasses to implement abstract method 'hasNext()' and 'next()'.
+public interface Iterator {
+  ...
+  abstract boolean hasNext(); //Returns true if the iteration has more elements.
+  abstract E next();          //Returns the next element in the iteration.
+  ...
+}
+
+3)ArrayList implements List, List extends Collection and Collection extends Iterable.. That is, you could see the relationship like
+'Iterable <- Collection <- List <- ArrayList'
+
+. And Iterable, Collection and List just declare abstract method 'iterator()' and ArrayList alone implements it.
+
+-----------------------------------------------------------------------------------------------------------------
+
+
+
+I know this is an old question, but for anybody reading this who is stuck with the same question and who may be overwhelmed with all the terminology,
+
+here's a good, simple analogy to help you understand this distinction between iterables and iterators:
+
+Think of a public library. Old school. With paper books. Yes, that kind of library.
+
+A shelf full of books would be like an iterable. You can see the long line of books in the shelf. 
+
+You may not know how many, but you can see that it is a long collection of books.
+
+The librarian would be like the iterator. He can point to a specific book at any moment in time. 
+
+He can insert/remove/modify/read the book at that location where he's pointing. 
+
+He points, in sequence, to each book at a time every time you yell out "next!" to him. 
+
+So, you normally would ask him: "has Next?", and he'll say "yes", to which you say "next!" and he'll point to the next book. 
+
+He also knows when he's reached the end of the shelf, so that when you ask: "has Next?" he'll say "no".
+
+I know it's a bit silly, but I hope this helps.

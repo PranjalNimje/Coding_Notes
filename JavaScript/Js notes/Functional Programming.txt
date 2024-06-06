@@ -1,0 +1,17 @@
+Functional Programming (FP)
+
+Object Oriented Programming (OOP)
+
+
+Data separate from function :
+----------------------------
+
+var shoes=100;  				<- Data
+var stateTax=1.1 ;
+
+function totalPrice(price,tax){  	<- Function
+	return price*tax;
+} 
+
+
+In OOPs, we combine data and functions to form objects

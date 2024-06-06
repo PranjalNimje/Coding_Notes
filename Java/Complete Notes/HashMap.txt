@@ -1,0 +1,208 @@
+
+
+
+
+**************************************************************************************
+
+MAP
+
+**************************************************************************************
+
+-HashMap
+	-LinkedHashMap
+-IdentityHashMap
+-WeakHashMap
+-SortedMap
+	-NavigationalSortedMap
+		-TreeMap
+-HashTable
+
+--------------------------------------------------------------------------
+
+Collection views of the map
+
+1)  Set KeySet() -----------gives a set of keys
+			   -for (String key : map.keySet())
+
+2)  Collection values()-----gives a ___ of values
+			   -for (Object value : map.values()) 
+
+3)  Set entrySet------------gives a set of Key-Value pair
+			   -mainly used with map.entry
+
+			   -for (Map.Entry<String, Object> entry : map.entrySet()) {
+    			    String key = entry.getKey();
+                            Object value = entry.getValue();
+                            // ...
+                            }
+
+
+Entry (Interface)
+
+-each k-v pair is called one entry
+-without existing map object there is no chance of entry object
+- interface Map
+	-Interface Entry
+		-Object getKey();     
+		-Object getValue();  
+		-Object setValue();
+
+-Each map provides access to so called entry set, which is a set of pairs from the map.
+-Each pair is represented by an instance of Map.Entry<K,V>. ***************
+-Map<Integer,String> myMap = ...
+ for (Map.Entry<Integer,String> e : myMap.entrySet()) {
+    System.out.println(e.getKey()+" ---> "+e.getValue());
+ }
+-If we want to perform operations on key/values use entry interface( Map.Entry)
+
+
+
+--------------------------------------------------------------------------
+
+Iterate over a map using streams
+
+--Using the Java 8 Stream API
+
+final long[] i = {0};
+map.entrySet().stream().forEach(e -> i[0] += e.getKey() + e.getValue());
+
+--Using the Java 8 Stream API parallel
+
+final long[] i = {0};
+map.entrySet().stream().parallel().forEach(e -> i[0] += e.getKey() + e.getValue());
+
+
+hm.forEach((k,v) -> System.out.println("key: "+k+" value:"+v));
+
+
+----------------------------------------------------------------------------------
+
+How to update a value, given a key in a hashmap?
+
+map.put(key, map.get(key) + 1);
+
+It will update the value for the existing mapping. Note that this uses auto-boxing. 
+With the help of map.get(key) we get the value of corresponding key, then you can update with your requirement. 
+Here I am updating to increment value by 1.
+
+hashmap.put(key, hashmap.get(key) + 1);
+
+The method put will replace the value of an existing key and will create it if doesn't exist.
+
+
+
+
+
+
+
+
+
+
+key: value (Map-> #Map -> Australia)(Key opening a valve in autralia)
+Each key:value pair is called entry
+duplicate keys not allowed
+insertion order not preserved
+null key allowed only once
+null values allowed any no. of times
+No relation between Collection and map
+Map is not a child interface of collection
+
+put(k,v)
+putAll(Map)
+get(key)->gets the value of key
+	-> if key not available then we get null
+	-> get(key) gives value
+remove(key)
+containsKey(key) -> returns true and false
+containsValue(value) ->returns true or false
+int size
+isEmpty -> true or false
+
+------------------------------------------------------------------------
+What's the best way to iterate over the items in a HashMap?
+
+
+If you're only interested in the keys, you can iterate through the keySet() of the map:
+
+Map<String, Object> map = ...;
+for (String key : map.keySet()) {
+    // ...
+}
+
+
+If you only need the values, use values():
+
+for (Object value : map.values()) {
+    // ...
+}
+
+
+Finally, if you want both the key and value, use entrySet():
+
+for (Map.Entry<String, Object> entry : map.entrySet()) {
+    String key = entry.getKey();
+    Object value = entry.getValue();
+    // ...
+}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Since all maps in Java implement the Map interface, the following techniques will work for any map implementation (HashMap, TreeMap, LinkedHashMap, Hashtable, etc.)
+
+Method #1: Iterating over entries using a For-Each loop.
+
+This is the most common method and is preferable in most cases. It should be used if you need both map keys and values in the loop.
+
+Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+}
+Note that the For-Each loop was introduced in Java 5, so this method is working only in newer versions of the language. Also a For-Each loop will throw NullPointerException if you try to iterate over a map that is null, so before iterating you should always check for null references.
+
+Method #2: Iterating over keys or values using a For-Each loop.
+
+If you need only keys or values from the map, you can iterate over keySet or values instead of entrySet.
+
+Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+
+// Iterating over keys only
+for (Integer key : map.keySet()) {
+    System.out.println("Key = " + key);
+}
+
+// Iterating over values only
+for (Integer value : map.values()) {
+    System.out.println("Value = " + value);
+}
+This method gives a slight performance advantage over entrySet iteration (about 10% faster) and is more clean.
+
+Method #3: Iterating using Iterator.
+
+Using Generics:
+
+Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+Iterator<Map.Entry<Integer, Integer>> entries = map.entrySet().iterator();
+while (entries.hasNext()) {
+    Map.Entry<Integer, Integer> entry = entries.next();
+    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+}
+Without Generics:
+
+Map map = new HashMap();
+Iterator entries = map.entrySet().iterator();
+while (entries.hasNext()) {
+    Map.Entry entry = (Map.Entry) entries.next();
+    Integer key = (Integer)entry.getKey();
+    Integer value = (Integer)entry.getValue();
+    System.out.println("Key = " + key + ", Value = " + value);
+}
+
+Method #4: Iterating over keys and searching for values (inefficient).
+
+Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+for (Integer key : map.keySet()) {
+    Integer value = map.get(key);
+    System.out.println("Key = " + key + ", Value = " + value);
+}
+

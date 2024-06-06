@@ -1,0 +1,342 @@
+
+chars() method
+
+chars() – with which we can obtain an instance of Stream from a String object. 
+This simple API returns an instance of IntStream from the input String.
+Simply put, IntStream contains an integer representation of the characters from the String object:
+
+Ex.
+String testString = "String";
+IntStream intStream = testString.chars();
+
+It's possible to work with the integer representation of the characters 
+without converting them to their Character equivalent.
+
+However, if we're to display the characters for reading, 
+we need to convert the integers to the human-friendly Character form:
+
+Stream<Character> characterStream = testString.chars().mapToObj(c -> (char) c);
+
+Ex.
+str.chars().mapToObj(c -> (char) c).forEach(System.out::println); =======>(c -> (char) c)
+output ->
+		H
+		e	 ==> int is converted to char due to (char) typecasting
+		l        ==> In this char is autoboxed to Character bcoz of mapToObj. Character is an object and int is primitive datatype.
+		l
+		o
+
+Ex.
+str.chars().mapToObj(c ->c).forEach(System.out::println); ================>(c ->c)
+output ->
+		72
+		101
+		108       ==> In this int is autoboxed to Integer bcoz of mapToObj. Integer is a object and int is primitive datatype.
+		108
+		111
+
+***************Why do we need mapToObject ?
+***************Why do I need to map IntStream to Stream<Character>?
+
+Because String.chars() is already returning an IntStream and IntStream does not have mapToInt function
+
+The method CharSequence::chars returns the IntStream, which of course doesn't provide any method converting to int, such as mapToInt, 
+but mapToObj instead. 
+Therefore the method IntStream::map(IntUnaryOperator mapper) 
+which both takes returns int as well shall be used since IntUnaryOperator does the same like Function<Integer, Integer> or UnaryOperator<Integer>
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+isWhitespace
+
+isWhitespace(char ch) method of Character class determines whether the given character(Unicode code point) is a whitespace character or not
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+Map
+
+Link- https://www.benchresources.net/java-8-count-and-print-number-of-repeated-character-occurrences-in-a-string/
+
+map.entrySet().forEach(System.out::println); ==> prints eaach entry
+a=5
+r=2
+b=2
+c=1
+d=1
+
+
+
+map.entrySet().stream()
+		.sorted(Map.Entry.comparingByValue(Comparator.naturalOrder()))    ==> sort using value in ascending order
+		.forEach(System.out::println);
+OR
+map.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEach(System.out::println);
+c=1
+d=1
+r=2
+b=2
+a=5
+
+we can also sort by key using : 
+	.sorted(Map.Entry.comparingByKey()))
+
+map.entrySet().stream()
+		.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))    ==> sort using value in descending order
+		.forEach(System.out::println);
+a=5
+r=2
+b=2
+c=1
+d=1
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+Strings Vowels and Consonants
+
+String str2=str.toLowerCase().replace(" ", "");
+		
+vowels= str2.chars().filter(c->(c=='a' || c=='e' || c=='i' || c=='o' || c=='u')).count();
+		
+consonant= str2.chars()
+		.filter(c-> (c>='a' && c<='z'))
+		.filter(c->(c!='a' && c!='e' && c!='i' && c!='o' && c!='u'))
+		.count();
+
+chars() -> return Intstream.
+and in filter we are comparing c>='a' i.e. 97>=97 bcoz we the compiler uses ascii values i.e int valuess
+i.e 	c>='a'  ==> (IntStream number)>=96
+	c<='z'  ==> (IntStream number)<=122
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+Upper and lower Case
+
+Stream.of(str).map(s->s.toUpperCase()).forEach(System.out::println);
+input: The sky is blue
+output: THE SKY IS BLUE
+
+Stream.of(str).map(s->s.toLowerCase()).forEach(System.out::println);
+input: The sky is blue
+output: the sky is blue
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+Sorted stream
+
+If we want to apply chars() method, directly apply on string. Its not a stream method, so no need to Stream.of(str) or str.stream()
+
+str.chars().mapToObj(c->(char)c).sorted().forEach(System.out::println);
+input : the apple of my eye
+output : a
+	 e
+	 e
+	 e
+	 e
+	 f
+	 h
+ 	 l
+	 m
+	 o
+ 	 p
+	 p
+	 t
+	 y
+	 y
+
+
+Stream.of(str).map(String::toUpperCase)
+
+
+Stream.of("Pihu","Karan","Diya","Bhavana","Zoya","Abhi","Kaira")
+	.filter(s->s.startsWith("A"))
+	.forEach(System.out::println);
+output : Abhi
+
+
+Stream.of("Pihu","Karan","Diya","Bhavana","Zoya","Abhi","Kaira")
+	.sorted()
+	.forEach(System.out::println);
+output: Abhi
+	Bhavana
+	Diya
+	Kaira
+	Karan
+	Pihu
+	Zoya
+
+
+System.out.println(  Stream.of("Pihu","Karan","Diya","Bhavana","Zoya","Abhi","Kaira")
+				.filter((s) -> s.startsWith("B"))
+		        	.findFirst()
+		        	.get()  );
+		
+output: Bhavana
+
+
+Stream.of("Pihu","Karan","Diya","Bhavana","Zoya","Abhi","Kaira")
+		.map((s) -> s.charAt(0)).forEach(System.out::println);
+P
+K
+D
+B
+Z
+A
+K
+
+
+-----------------------------------------------------------------------------------
+
+String valueOf()
+
+-converts different types of values into string
+- int 		to 	String
+  long 		to 	string
+  boolean 	to 	string
+  character 	to 	string
+  float 	to 	string
+  double 	to 	string
+  object 	to 	string
+  char array 	to 	string.
+
+
+
+-----------------------------------------------------------------------------------
+Check String contains only Digits :  
+
+-	Stream.allMatch()
+-	Character.isDigit(ch) 
+
+boolean isStrDigit= str.chars().allMatch(c->Character.isDigit(c));
+input  :  345rt     4567893	dfghjkd
+output :  false     true	false
+
+
+-----------------------------------------------------------------------------------
+Check String contains only Alphabets or Letters :
+
+-	Stream.allMatch()
+-	Character.isLetter(c)
+
+boolean isStrLetter = str.chars().allMatch(c->Character.isLetter(c));
+input  :  345rt     4567893	dfghjkd
+output :  false     false	true
+
+-----------------------------------------------------------------------------------
+Reverse complete String using Stream and Collectors : 
+
+String class does not have reverse() method and neither does character class
+we need to convert the input string to StringBuffer, which is achieved by using the reverse method of StringBuffer.
+
+-	reverse() -> exists in StringBuilder not in String Class or Character Class
+-	joining() ->  It returns a Collector that joins or concatenates the input streams into String in the order of their appearance.
+
+
+Stream.of(str).map(s->new StringBuilder(str).reverse()).collect(Collectors.joining())
+input : asdfghjkl	apple of my eye
+output: lkjhgfdsa	eye ym fo elppa
+
+-----------------------------------------------------------------------------------
+Counting & Printing duplicate character occurrences :
+
+Map<Character, Long> characterCountMap = input
+                .chars() 			// convert to IntStream
+                .mapToObj(c -> (char) c) 	// map to Character object
+                .filter(ch -> !Character.isWhitespace(ch))
+                .collect(Collectors.groupingBy(ch -> ch, Collectors.counting()));
+
+
+-----------------------------------------------------------------------------------
+Split a String and Collect to any Collection 
+
+split - it returns string array --i.e. String[] str
+Arrays.stream - in this method we have to pass an array
+Hence, Array.stream(str.split(" "))
+
+
+List<String> ls =	Arrays.stream(str.split(" ")).map(s->s.trim()).collect(Collectors.toList());
+
+Or 
+
+String[] str2=str.split(" ");
+List <String> ls2 = Arrays.stream(str2).map(s->s.trim()).collect(Collectors.toList());
+
+
+Arrays.stream(str.split(" ")).map(s->s.trim()).collect(Collectors.toCollection(TreeSet::new)s);
+
+-----------------------------------------------------------------------------------
+Find First and Last elements in HashMap
+1) To find first entry in a HashMap, we can use findFirst() method of Stream API which returns Optional<T> and
+2) We can invoke get() method on Optional<T> to obtain the final result
+3) Similarly, to get last element from HashMap, we can use reduce() method of Stream API which returns Optional<T> and
+4) We can invoke get() method on Optional<T> to obtain the final result
+
+
+// find First entry in HashMap
+        firstEntry = companies.entrySet().stream().findFirst().get();
+ 
+// find Last entry in HashMap
+        lastEntry = companies.entrySet().stream().reduce((one, two) -> two).get();
+
+----------------------------------------------------------------------------------
+
+Find sum and average of a List or ArrayList ?
+
+List<Integer> list= new ArrayList<>();
+		list.add(4);
+		list.add(2);
+		list.add(5);
+		list.add(1);
+		list.add(3);
+
+Integer sum=list.stream().reduce((a,b)->a+b).get();
+Integer sum=list.stream().reduce(Integer::sum).get();
+
+Double avg=list.stream().mapToInt(s->s).average().getAsDouble();
+
+Use IntSummaryStatistics to find various parameters/statistics of a List like,
+Sum of all elements in a List using getSum() method which returns value in long-type
+Average of all elements in a List using getAverage() method which returns value in double-type
+Minimum element from a List using getMin() method which returns value in integer-type
+Maximum element from a List using getMax() method which returns value in integer-type
+Number of elements in a List (or count) using getCount() method which returns value in long-type
+
+IntSummaryStatistics statistics = numbers
+                .stream()
+                .mapToInt(num -> num)
+                .summaryStatistics();
+
+
+statistics.getSum()
+statistics.getAverage()
+statistics.getMin()
+statistics.getMax()
+statistics.getCount()
+
+----------------------------------------------------------------------------------
+Sorting Arrays in Ascending order :
+
+Integer[] intArray = {
+                1975,
+                2003,
+                1979};
+Arrays.stream(intArray).sorted().forEach(System.out::println);
+
+Arrays.stream(intArray).sorted(Comparator.reverseOrder()).forEach(System.out::println);
+
+
+----------------------------------------------------------------------------------
+
+Check whether String contains specific Word:
+
+contains(CharSequence s) method of String
+	Checks whether specified word/letter/sub-string is present in the invoking String or not
+	Returns true, if specified word/string is present otherwise false
+	Throws java.lang.NullPointerException if specified word/string is null
+
+boolean boolSearch2 = Stream.of(str).anyMatch(s -> s.contains("tech"));
+
+
+
+

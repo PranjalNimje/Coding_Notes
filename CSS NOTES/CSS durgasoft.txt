@@ -1,0 +1,711 @@
+
+
+
+Atom shortcuts:
+---------------------
+ctrl + shift +d ---> Duplicate current line
+ctrl + shift +c ---> To copy current page full path
+ctrl + /        ---> To comment/uncomment
+File ---> Preferences ---> Settings --->Text Editor ---> softwrap ===> Word wrapping
+
+
+Ways to define style for html elements:
+--------------------------------------
+3 ways
+
+1. In line
+2. By using style tag
+3. By using external CSS file
+
+
+1. In Line
+-------------------------------
+<h1 style="color:red">  This is for CSS In line demo <h1>
+
+We have to define styling for every tag.
+This increases complexity.
+html page coontains 100s of tags
+for ever tag it bcomes complex to write inline styling
+
+
+2. By using style tag:
+-------------------------------
+Inside head body of html :
+<style>
+	h1{
+	     color:red
+	}
+<style>
+
+This type of styling is applicable to only current page
+Duplicate code in every template is not recommended
+To overcome such type of problem define external CSS file
+
+
+3. By using external CSS file
+--------------------------------
+we have to link .css file to .html file : 
+<link rel="stylesheet" href="/css/style.css">
+
+It is possible to use .css file to multiple web pages(.html files)
+
+In .css File
+defining an external css file is highly recommended
+
+Overriding/Preferences :
+-----------------------------------------------
+highest preference goes to inline in overriding
+Suppose we define .css file and also inline
+Inline is going to override
+
+
+Basic structure of CSS file:
+-----------------------------
+tagname{
+	property:value;
+}
+
+h1{
+   color:red;
+}
+
+In html file, to link .css file:
+<head>
+	<link  rel="stylesheet" href="style.css">
+</head>
+
+
+
+<p>lorem ipsum<p>
+
+bootstrap - predefined libraries
+
+
+Various Possible ways to specify color :
+----------------------------------------
+1.
+h1{
+   color:rgb;
+   color: blue;
+}
+
+----------
+
+2.
+color:rgb(0,0,0) ---> Black
+color:rgb(255,255,255) ---> White
+color:rgb(255,0,0)--->Red
+
+ r   g   b
+(0 , 0 , 0) <--Black
+(255,255,255)<--White : If we mix all the colours we get white
+
+(255,0 , 0) <-- red
+(0 , 255, 0)<-- green
+(0 , 0 ,255)<-- blue
+
+On google, we have color picker -to select rgb value that we want
+
+Universal colore:
+r-->red
+g-->green
+b-->blue
+
+The allowed range of values : 0 to 255
+
+----------
+
+3. 6- digit hexa decimal code
+
+color: #f44e42
+
+In color picker we will get hexa decimal number as well
+
+-----------
+4. rgba
+
+color: rgba(255,255,255,0.0)
+
+a means alpha ---> transparency
+0.0 to 1.0
+
+0.0  means full light
+1.0  means full dark
+
+
+
+Most commonly used Hexadecimal
+
+
+Setting background:
+-------------------
+We can use both:
+	background : 
+	background-color :
+
+
+background-color vs color :
+------------------------
+color: means text color
+background-color : means background-color
+
+
+
+How to set background image:
+-----------------------------
+Ex.
+body{
+     background: url(https://www.google.com/pixabay/..);
+     background-repeat: no-repeat;
+     
+}
+
+if pic is small it starts repeating, 
+background-repeat: no-repeat;
+
+But then image does not occupy entire page, only a small part,
+hence,
+background-size: cover;
+
+ctrl+/ --> comment/uncomment
+
+How to set border
+------------------
+for border we have to specify color*** and width*** and style***
+
+width
+style
+color
+
+h1{
+    border-color: blue;
+    border-width: thick; (thin, medium,thick etc( or pixels- 5px, 20px,etc))
+    border-style: solid; (dotted, groove etc)
+}
+
+shortcut:
+------------
+border: blue 20px solid;  <--- order is not imp
+border: solid red 5px;
+
+
+CSS selectors:
+---------------
+to style/makeup html elements(h1,p,div)
+
+We have to select html elements and we have to apply styling.
+To select html elements we have to use css selectors.
+
+Basic CSS Selectors:
+--------------------
+3 basic electors
+
+1. Element selectors
+2. Id selectors
+3. Class selectors
+
+
+1. Element selectors:
+-------------------
+select all instances of given element and apply the style
+
+h1{
+   color: red;s
+}
+
+
+2. Id selectors:
+---------------------
+If you want to a particular tag not for every instance
+
+Id selector should be prefixed with the # symbol
+Selects an element with given id, But within HTML, id should be unique.
+***id value should be unique***
+
+.html : <h1 id="specialh1"> The importance of CSS <h1>
+
+.css  : #specialh1{
+    		color:blue;
+	}
+
+
+3. Class selectors
+-----------------------
+selects all elements with the given class and apply styling
+
+<h1 class='specialh2' >The importance of css<h1>
+<p class='specialh2'> Importance</p>
+
+
+.specialh1{
+	color:red;
+}
+
+we can use same class on multiple tags.
+
+For every instance of specified tag==> Element selectors
+For only one tag instance ==> Id selectors
+For multiple tags (may be different tags)==> class selectors
+
+
+Suppose,
+100 h1 tags
+for all 100 h1 tags red color==> element selectors
+only one h1 tag should be displayed in blue color==> id selector
+just 15 h1 tags should be displayed in orange color==> class selector
+
+
+tagname{			h1{
+	color:red;		    color:red;  
+}				}
+
+#idname{			#specialh{
+	color:red;			color:red;
+}				}
+
+.classname{			.specialh1{
+	color:red;			color:red;
+}				}
+
+
+--------------------------------------------------------
+div tag - to group tags, to apply common styling to the group 
+we use div tag
+
+<div>
+	to group tags
+	to group tags
+	to group tags
+	to group tags
+	to group tags
+</div>
+
+<span> : used for inline styling To highlight something (a text, link)
+
+<div class="">
+	<p> 
+to group tags, to apply common styling to the group 
+we use div tag  to group tags, to apply common styling to the group 
+we use div ta gto group tags, to apply common styling to the group 
+we      <span> I AM IMPORTANT, HIGHLIGHT ME </span>         ta gto group tags to apply common styling to the group 
+we use div t agto group tags, to apply common styling to the group 
+we use div ta gto group tags, to apply common styling to the group 
+we use div tag
+		
+	</p>
+
+
+</div>
+
+span{
+	color:yellow;
+}
+
+=========================================================
+
+Exercise:
+
+try this:
+
+<div class="special">
+	to group tags, to apply common styling to the group 
+we use div tag
+<div>
+
+.special{
+color:yellow;
+}
+-------------------------------
+
+<span> 
+	to group tags, to apply common styling to the group 
+	we use div tag
+</span>
+
+span{
+	color:yellow;
+}
+
+=========================================================
+
+
+Advanced Css selectors:
+--------------------------------
+1. * selector
+2. Descendant selector
+3. Adjacent Selector
+4. Attribute selector
+5. nth of type selector
+
+
+* selector
+---------------
+* means everything, all , complete page, complete body tag
+this style is applicable for every tag in web page
+
+*{
+	color:red;
+	background: blue;
+}
+
+
+2. Descendant selector
+----------------------------
+sub level---> child tag
+
+tag which is available inside another tag
+
+If supposed child tag is present in supposed tag then only
+apply styling
+
+suppose,
+anchor tag present in li tag then apply this styling
+
+=========================
+parenttag childtag{
+
+}
+=========================
+li a{
+	color:blue;
+}
+if anchor <a> tag available inside <li>
+
+p span {
+ color:red
+}
+
+Style applicable only for span tags which are present inside
+p paragraph tag
+
+body ul li a{
+	color:red;
+}
+
+body a{
+	color:red;
+}
+
+child name need not be imediate child
+
+3.Adjacent Selector
+------------------------
+h1+a{
+	color:blue;
+	background-color:yellow;
+}
+
+select all anchor tags which are adjacent to h1 tag and 
+apply styling
+
+
+div+p{
+	color:blue;
+	background-color:yellow;
+}
+select all p tags which are adjacent to div tag and 
+apply styling
+
+immediate adjacent only***
+
+
+div ul+a{
+}
+select all anchor tags which are adjacent to ul tag and 
+present inside div tag and apply styling
+
+4. Attribute selector :
+-----------------------------
+<a href=#>  href is the attribute, and  # is the value
+
+<link rel="stylesheet">  rel is the attribute 
+				stylesheet is the value
+---------------------------------------
+input[type='password']{
+	background-color: yellow;
+}
+
+<input type='text'>
+<input type='password'>
+<input type='email'>
+<input type='text'>
+---------------------------------------
+
+
+a[href="http://flipkart.com"]{
+	background:red;
+}
+
+---------------------------------------
+5. nth of type selectors:
+
+<ul>
+	<li>amazon</li>
+	<li>flipkart</li>
+	<li>myntra</li>
+	<li>ajio</li>
+</ul>
+<ul>
+	<li>amazon</li>
+	<li>flipkart</li>
+	<li>myntra</li>
+	<li>ajio</li>
+</ul>
+<ul>
+	<li>amazon</li>
+	<li>flipkart</li>
+	<li>myntra</li>
+	<li>ajio</li>
+</ul>
+
+for every nth element of a particular style, we want to 
+apply styling, then go for nth type selector
+
+li:nth-of-type(2){
+	background: yellow;
+	color: blue;
+}
+For every 2nd occurence li tag, styling is applicable.
+
+li:nth-of-type(even){
+	background: yellow;
+	color: blue;
+}
+For every even occurence li tag, styling is applicable.
+
+-------------------------------------------------------
+=======================================================
+CSS Inheritance:
+
+whatever style parent tag has, bydefault will be 
+available for child tags also.
+
+li tag is child of ul, so styling will apply to li also
+<ul>
+	<li>amazon</li>
+	<li>flipkart</li>
+	<li>myntra</li>
+	<li>ajio</li>
+</ul>
+
+=======================================================
+CSS Specificity:
+
+If multiple styles are available for element, then most 
+specific style will be considered.
+
+Ex.
+parent--> style1
+child--> style2
+
+so child style will be considered
+most specific is always gonna be considered
+
+-------------------------------------------------------
+
+text-transform: uppercase/ capitalize / lowercase,etc
+
+-------------------------------------------------------
+
+#special: first-letter{
+	color: green;
+	font-size: 50px;
+}
+
+-------------------------------------------------------
+
+h1: hover{
+	color:white;
+	font-size: 100px;
+}
+
+-------------------------------------------------------
+
+h1: hover{
+	color:white;
+	border: 10px solid red;
+}
+
+-------------------------------------------------------
+
+make all anchor tags elements that have been visited 
+with yellow color
+
+
+a:visited{
+	color:yellow;
+}
+
+-------------------------------------------------------
+
+Fonts and Text in css:
+-------------------------
+1. font-size
+2. font-family - ariel, times new roman
+3. font-weight
+4. line-height
+5. text-align
+6. text-decoration
+
+1. font-family - ariel, times new roman, calibri
+----------------------------------------
+fonts.google.com
+
+cssfontstack.com - provides n no of font styles.
+multiple sites are there
+
+font-family
+
+Arial Black
+Arial narrow 
+futura
+candara
+geneva
+helvetica
+
+2. font-size:
+-------------
+40px
+
+2.0em <--em units- dynamic font size,relative font size
+
+2.0 em means double of parent font size
+
+3.0 em means triple the size of parent font size
+
+0.5 em means half the size of parent font size
+
+
+3.font-weight
+--------------
+light bold thick bolder normal 100 300 900
+100 means light
+900 means complete bold
+
+4. line-height:
+---------------
+The space between two lines
+
+line height:2.5
+
+
+5. text-align:
+-----------------
+center  right left  
+
+
+6. text-decoration:
+----------------------
+underline  overline  line-through
+
+
+durga  <--underline
+-----
+
+
+-----
+durga  <--overline
+
+line-through
+
+==========================================================
+
+How to use custom fonts
+fonts.google.com
+To use those fonts:
+Select the style you want to use-> select this style
+->link is there-> copy paste that link inside head
+->also copy css rules and paste it inside css file
+
+==========================================================
+
+img->
+height :300px
+width : 30%
+float : left
+margin : 1.5%
+
+
+p->
+text-align : center
+font-size : 25 px
+font-weight : thick
+border-bottom :solid red 5px
+padding-bottom : 20px
+
+
+space between border and content - padding
+
+4 images in a row i require, so 100%4 ---bt 80% occupied,
+20% left for borders
+
+20,20,20,20 <--4 images
+		<--8 margins
+
+4 images has 8 borders
+
+20% remaining of 100%
+
+20/8 <-2.5 margin
+
+height :300px
+width : 20%
+float : left
+margin : 2.5% <-all 4 margins covered- top, bottom, left, right
+
+
+==========================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

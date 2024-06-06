@@ -1,0 +1,48 @@
+What Is an Interface?
+
+objects define their interaction with the outside world through the methods that they expose. 
+
+An interface is a group of related methods with empty bodies.
+
+Methods form the object's interface with the outside world; 
+the buttons on the front of your television set, 
+for example, are the interface between you and the electrical 
+wiring on the other side of its plastic casing. 
+You press the "power" button to turn the television on and off.
+
+class ACMEBicycle implements Bicycle
+
+Interface is a contract. 
+A simple example is a Tenant and Landlord which are the two parties 
+and the contract is the Rent Agreement. 
+Rent Agreement contains various clause which Tenants have to follow. 
+Likewise Interface is a contact which contains various method 
+(Declaration) which the Party has to implement (provide method bodies).
+Here party one is the class which implement the interface and 
+second party is Client and the way to use and interface is having 
+“Reference of Interface” and “Object of Implementing class”
+
+
+
+Interfaces are important because they separate what a class does from how it does it.
+It reduces boilerplate code (i.e. pure virtual functions)
+To actually compile the ACMEBicycle class, you'll need to add the
+public keyword to the beginning of the implemented interface methods.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
